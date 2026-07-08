@@ -45,8 +45,8 @@ export const siteSettingsType = defineType({
       name: 'heroInstitutionLine',
       title: 'Hero Institution Label',
       type: 'string',
-      description: 'The small label shown above the tagline. Default: "African Center of Excellence · Makerere University"',
-      initialValue: 'African Center of Excellence · Makerere University',
+      description: 'The small label shown above the tagline. Default: "African Center of Excellence in Bioinformatics & Data Intensive Sciences"',
+      initialValue: 'African Center of Excellence in Bioinformatics & Data Intensive Sciences',
     }),
   ],
   preview: {

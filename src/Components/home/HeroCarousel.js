@@ -64,7 +64,7 @@ export default function HeroCarousel({ slides, tagline, institutionLine }) {
           />
 
           <p className="text-xs font-bold uppercase tracking-[0.22em] text-red-700 mb-5">
-            {institutionLine || 'African Center of Excellence · Makerere University'}
+            {institutionLine || 'African Center of Excellence in Bioinformatics & Data Intensive Sciences'}
           </p>
 
           <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.25rem] font-extrabold text-gray-900 leading-[1.12] tracking-tight max-w-xl">
