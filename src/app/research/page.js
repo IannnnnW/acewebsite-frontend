@@ -181,7 +181,7 @@ export default function ResearchPage() {
                               ? 'bg-emerald-50 text-emerald-700'
                               : project.status === 'completed'
                               ? 'bg-gray-100 text-gray-700'
-                              : 'bg-purple-50 text-purple-700'
+                              : 'bg-amber-50 text-amber-700'
                           }`}>
                             {project.status}
                           </span>

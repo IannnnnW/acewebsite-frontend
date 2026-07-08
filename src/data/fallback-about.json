@@ -1,11 +1,11 @@
 {
   "whoWeAreSection": {
-    "body": "The Infectious Diseases Institute (IDI), Makerere University's College of Computing & Health Sciences in partnership with the US Government National Institute of Allergy and Infectious Diseases and the Office of Cyber Infrastructure and Computational Biology (NIH/NIAID/OCICB) have established the African Center of Excellence in Bioinformatics & Data Sciences — one of only two such centres on the African continent.\n\nFirst of its kind on the Makerere campus, the ACE is a centre for Computational Biology and Big Data analysis. It houses a dedicated High-Performance Computing cluster, a Tele-learning Centre, collaborative rooms, and a Virtual Reality room for the latest 3D & VR pedagogical and diagnostic approaches. Layered over those facilities are professionally curated long-term (MSc & PhD) and short-term (Certificate) academic programmes, as well as research and development support units."
+    "body": "The Infectious Diseases Institute (IDI), Makerere University's College of Computing & Health Sciences in partnership with the US Government National Institute of Allergy and Infectious Diseases and the Office of Cyber Infrastructure and Computational Biology (NIH/NIAID/OCICB) have established the African Center of Excellence in Bioinformatics and Data Intensive Sciences — one of only two such centers on the African continent.\n\nFirst of its kind on the Makerere campus, the ACE is a center for Computational Biology and Big Data analysis. It houses a dedicated High-Performance Computing cluster, a Tele-learning Center, collaborative rooms, and a Virtual Reality room for the latest 3D & VR pedagogical and diagnostic approaches. Layered over those facilities are professionally curated long-term (MSc & PhD) and short-term (Certificate) academic programmes, as well as research and development support units."
   },
   "introSection": {
     "heading": "About ACE",
     "subheading": "Driving Excellence in Computational Sciences",
-    "description": "The African Center of Excellence in Bioinformatics and Data-Intensive Sciences is dedicated to advancing computational research, building capacity, and fostering innovation across Africa. Established to address the growing need for expertise in bioinformatics, data science, and high-performance computing, we train world-class researchers and tackle critical challenges in health, agriculture, and climate."
+    "description": "The African Center of Excellence in Bioinformatics and Data Intensive Sciences is dedicated to advancing computational research, building capacity, and fostering innovation across Africa. Established to address the growing need for expertise in bioinformatics, data science, and high-performance computing, we train world-class researchers and tackle critical challenges in health, agriculture, and climate."
   },
   "missionVision": {
     "mission": "To advance computational research and capacity building in bioinformatics, data science, and high-performance computing across Africa, fostering innovation and addressing critical challenges in health, agriculture, and climate.",
@@ -137,7 +137,7 @@
       {
         "year": "2015",
         "title": "Center Established",
-        "description": "The African Center of Excellence in Bioinformatics and Data-Intensive Sciences was officially established at Makerere University with support from the World Bank.",
+        "description": "The African Center of Excellence in Bioinformatics and Data Intensive Sciences was officially established at Makerere University with support from the World Bank.",
         "category": "establishment"
       },
       {

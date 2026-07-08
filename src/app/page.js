@@ -1,5 +1,5 @@
 import { client } from '@/lib/sanity'
-import { settingsQuery, featuredPostsQuery, heroSlidesQuery } from '@/lib/queries'
+import { settingsQuery, featuredPostsQuery, heroSlidesQuery, siteSettingsQuery } from '@/lib/queries'
 import HeroCarousel from '@/Components/home/HeroCarousel'
 import MissionSection from '@/Components/home/MissionSection'
 import FocusAreasSection from '@/Components/home/FocusAreasSection'
@@ -8,18 +8,23 @@ import PartnershipsSection from '@/Components/home/PartnershipSection'
 
 async function getData() {
   const settings = await client.fetch(settingsQuery)
+  const siteSettings = await client.fetch(siteSettingsQuery)
   const featuredPosts = await client.fetch(featuredPostsQuery)
   const heroSlides = await client.fetch(heroSlidesQuery)
-  
-  return { settings, featuredPosts, heroSlides }
+
+  return { settings, siteSettings, featuredPosts, heroSlides }
 }
 
 export default async function Home() {
-  const { settings, featuredPosts, heroSlides } = await getData()
+  const { settings, siteSettings, featuredPosts, heroSlides } = await getData()
 
   return (
     <>
-      <HeroCarousel slides={heroSlides || []} />
+      <HeroCarousel
+        slides={heroSlides || []}
+        tagline={siteSettings?.heroTagline}
+        institutionLine={siteSettings?.heroInstitutionLine}
+      />
       <MissionSection />
       <FocusAreasSection />
       <StatsSection stats={settings?.stats} />

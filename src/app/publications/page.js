@@ -25,6 +25,7 @@ export default function PublicationsPage() {
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [activeArea, setActiveArea] = useState('all')
+  const [activeYear, setActiveYear] = useState('all')
   const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
@@ -36,10 +37,28 @@ export default function PublicationsPage() {
     getPublications()
   }, [])
 
+  const availableYears = useMemo(() => {
+    const years = publications
+      .map((p) => {
+        const raw = p.publishedAt || p.date
+        if (!raw) return null
+        return new Date(raw).getFullYear()
+      })
+      .filter(Boolean)
+    return [...new Set(years)].sort((a, b) => b - a)
+  }, [publications])
+
   const filtered = useMemo(() => {
     let result = publications || []
     if (activeArea !== 'all') {
       result = result.filter((p) => p.thematicAreas?.includes(activeArea))
+    }
+    if (activeYear !== 'all') {
+      result = result.filter((p) => {
+        const raw = p.publishedAt || p.date
+        if (!raw) return false
+        return new Date(raw).getFullYear() === Number(activeYear)
+      })
     }
     if (search.trim()) {
       const q = search.toLowerCase()
@@ -53,7 +72,7 @@ export default function PublicationsPage() {
       )
     }
     return result
-  }, [publications, activeArea, search])
+  }, [publications, activeArea, activeYear, search])
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE)
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
@@ -66,6 +85,11 @@ export default function PublicationsPage() {
 
   function handleAreaChange(area) {
     setActiveArea(area)
+    setCurrentPage(1)
+  }
+
+  function handleYearChange(year) {
+    setActiveYear(year)
     setCurrentPage(1)
   }
 
@@ -160,102 +184,221 @@ export default function PublicationsPage() {
               </button>
             ))}
           </div>
+
         </div>
       </div>
 
-      {/* Publications List */}
-      <div className="mx-auto max-w-7xl px-6 lg:px-8 py-12">
-        <div className="flex items-center justify-between mb-8">
-          <p className="text-sm text-gray-500">
-            {filtered.length} publication{filtered.length !== 1 ? 's' : ''} found
-            {activeArea !== 'all' && ` in ${THEMATIC_AREAS.find((a) => a.value === activeArea)?.label}`}
-            {search && ` matching "${search}"`}
+      {/* Two-column layout: publications list + year sidebar */}
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 py-4">
+
+        {/* Simple section heading — sits above both columns */}
+        <div className="flex items-baseline justify-between mb-8">
+          <h2 className="text-2xl font-bold text-gray-900">
+            Publications
+          </h2>
+          <p className="text-sm text-gray-400">
+            {filtered.length} result{filtered.length !== 1 ? 's' : ''}
+            {activeArea !== 'all' && ` · ${THEMATIC_AREAS.find((a) => a.value === activeArea)?.label}`}
+            {activeYear !== 'all' && ` · ${activeYear}`}
           </p>
-          {totalPages > 1 && (
-            <p className="text-sm text-gray-500">
-              Page {currentPage} of {totalPages}
-            </p>
-          )}
         </div>
 
-        {paginated.length > 0 ? (
-          <>
-            <YearGroupedList publications={paginated} startIndex={startIndex} thematicAreas={THEMATIC_AREAS} />
+        <div className="flex gap-10 items-start">
 
+          {/* LEFT — Publications list */}
+          <div className="flex-1 min-w-0">
 
-            {/* Pagination */}
-            {totalPages > 1 && (
-              <nav className="flex items-center justify-center gap-2 mt-12" aria-label="Pagination">
-                <button
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
-                  className={`inline-flex items-center px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-                    currentPage === 1
-                      ? 'text-gray-400 bg-gray-100 border border-gray-300 cursor-not-allowed'
-                      : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
-                  }`}
+            {/* Mobile year filter — hidden on lg+ */}
+            {availableYears.length > 1 && (
+              <div className="lg:hidden mb-6 flex items-center gap-3">
+                <label htmlFor="year-select" className="text-xs font-bold uppercase tracking-widest text-gray-400 shrink-0">
+                  Year
+                </label>
+                <select
+                  id="year-select"
+                  value={activeYear}
+                  onChange={(e) => handleYearChange(e.target.value)}
+                  className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
                 >
-                  <svg className="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                  Previous
-                </button>
-
-                <div className="hidden sm:flex gap-2">
-                  {getPageNumbers().map((page, idx) =>
-                    page === '...' ? (
-                      <span key={`ellipsis-${idx}`} className="px-4 py-2 text-gray-500">...</span>
-                    ) : (
-                      <button
-                        key={page}
-                        onClick={() => handlePageChange(page)}
-                        className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-                          page === currentPage
-                            ? 'bg-red-700 text-white'
-                            : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
-                        }`}
-                      >
-                        {page}
-                      </button>
-                    )
-                  )}
-                </div>
-
-                <div className="sm:hidden px-4 py-2 text-sm text-gray-700">
-                  Page {currentPage} of {totalPages}
-                </div>
-
-                <button
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                  className={`inline-flex items-center px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-                    currentPage === totalPages
-                      ? 'text-gray-400 bg-gray-100 border border-gray-300 cursor-not-allowed'
-                      : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
-                  }`}
-                >
-                  Next
-                  <svg className="w-5 h-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
-              </nav>
+                  <option value="all">All Years</option>
+                  {availableYears.map((year) => (
+                    <option key={year} value={String(year)}>{year}</option>
+                  ))}
+                </select>
+              </div>
             )}
-          </>
-        ) : (
-          <div className="text-center py-16">
-            <svg className="mx-auto h-12 w-12 text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <p className="text-gray-500">No publications match your search.</p>
-            <button
-              onClick={() => { setSearch(''); setActiveArea('all') }}
-              className="mt-4 text-sm text-red-700 hover:text-red-600 font-medium"
-            >
-              Clear filters
-            </button>
+
+            {totalPages > 1 && (
+              <div className="flex justify-end mb-4">
+                <p className="text-sm text-gray-500">Page {currentPage} of {totalPages}</p>
+              </div>
+            )}
+
+            {paginated.length > 0 ? (
+              <>
+                <YearGroupedList publications={paginated} startIndex={startIndex} thematicAreas={THEMATIC_AREAS} activeYear={activeYear} />
+
+                {/* Pagination */}
+                {totalPages > 1 && (
+                  <nav className="flex items-center justify-center gap-2 mt-12" aria-label="Pagination">
+                    <button
+                      onClick={() => handlePageChange(currentPage - 1)}
+                      disabled={currentPage === 1}
+                      className={`inline-flex items-center px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                        currentPage === 1
+                          ? 'text-gray-400 bg-gray-100 border border-gray-300 cursor-not-allowed'
+                          : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
+                      }`}
+                    >
+                      <svg className="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                      </svg>
+                      Previous
+                    </button>
+
+                    <div className="hidden sm:flex gap-2">
+                      {getPageNumbers().map((page, idx) =>
+                        page === '...' ? (
+                          <span key={`ellipsis-${idx}`} className="px-4 py-2 text-gray-500">...</span>
+                        ) : (
+                          <button
+                            key={page}
+                            onClick={() => handlePageChange(page)}
+                            className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                              page === currentPage
+                                ? 'bg-red-700 text-white'
+                                : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
+                            }`}
+                          >
+                            {page}
+                          </button>
+                        )
+                      )}
+                    </div>
+
+                    <div className="sm:hidden px-4 py-2 text-sm text-gray-700">
+                      Page {currentPage} of {totalPages}
+                    </div>
+
+                    <button
+                      onClick={() => handlePageChange(currentPage + 1)}
+                      disabled={currentPage === totalPages}
+                      className={`inline-flex items-center px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                        currentPage === totalPages
+                          ? 'text-gray-400 bg-gray-100 border border-gray-300 cursor-not-allowed'
+                          : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
+                      }`}
+                    >
+                      Next
+                      <svg className="w-5 h-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  </nav>
+                )}
+              </>
+            ) : (
+              <div className="text-center py-16">
+                <svg className="mx-auto h-12 w-12 text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <p className="text-gray-500">No publications match your search.</p>
+                <button
+                  onClick={() => { setSearch(''); setActiveArea('all'); setActiveYear('all'); setCurrentPage(1) }}
+                  className="mt-4 text-sm text-red-700 hover:text-red-600 font-medium"
+                >
+                  Clear filters
+                </button>
+              </div>
+            )}
           </div>
-        )}
+
+          {/* RIGHT — Sticky year sidebar (lg+ only) */}
+          <aside
+            className="hidden lg:block w-56 shrink-0 self-start"
+            style={{ position: 'sticky', top: '8rem' }}
+          >
+            <div className="rounded-2xl overflow-hidden border border-gray-200 bg-white shadow-sm">
+
+              {/* Sidebar header */}
+              <div className="px-4 py-3 bg-gray-50 border-b border-gray-200">
+                <p className="text-xs font-bold uppercase tracking-widest text-gray-400">
+                  Filter by Year
+                </p>
+              </div>
+
+              {/* Year options */}
+              <div className="p-2 flex flex-col gap-0.5">
+
+                {/* All Years */}
+                <button
+                  onClick={() => handleYearChange('all')}
+                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                    activeYear === 'all'
+                      ? 'bg-red-700 text-white'
+                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                  }`}
+                >
+                  <span>All Years</span>
+                  {activeYear === 'all' && (
+                    <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                    </svg>
+                  )}
+                </button>
+
+                <div className="h-px bg-gray-100 mx-2 my-1" />
+
+                {/* Individual year buttons with per-year count badge */}
+                {availableYears.map((year) => {
+                  const yearCount = publications.filter((p) => {
+                    const raw = p.publishedAt || p.date
+                    return raw && new Date(raw).getFullYear() === year
+                  }).length
+
+                  return (
+                    <button
+                      key={year}
+                      onClick={() => handleYearChange(String(year))}
+                      className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm transition-all ${
+                        activeYear === String(year)
+                          ? 'bg-red-50 text-red-700 font-semibold border-l-[3px] border-red-600'
+                          : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium border-l-[3px] border-transparent'
+                      }`}
+                    >
+                      <span>{year}</span>
+                      <span className={`text-xs rounded-full px-2 py-0.5 font-medium ${
+                        activeYear === String(year)
+                          ? 'bg-red-100 text-red-700'
+                          : 'bg-gray-100 text-gray-500'
+                      }`}>
+                        {yearCount}
+                      </span>
+                    </button>
+                  )
+                })}
+              </div>
+
+              {/* Footer — live result count */}
+              <div className="px-4 py-3 border-t border-gray-100 bg-gray-50">
+                <p className="text-xs text-gray-400 leading-relaxed">
+                  <span className="font-bold text-gray-700">{filtered.length}</span>
+                  {' '}publication{filtered.length !== 1 ? 's' : ''}
+                  {activeYear !== 'all' ? ` in ${activeYear}` : ' total'}
+                </p>
+                {(activeArea !== 'all' || activeYear !== 'all') && (
+                  <button
+                    onClick={() => { handleAreaChange('all'); handleYearChange('all') }}
+                    className="mt-1.5 text-xs text-red-600 hover:text-red-700 font-medium"
+                  >
+                    Clear filters ×
+                  </button>
+                )}
+              </div>
+            </div>
+          </aside>
+
+        </div>
       </div>
 
       {/* CTA */}
@@ -291,7 +434,7 @@ function getPubYear(pub) {
   return src ? src.slice(0, 4) : 'Undated'
 }
 
-function YearGroupedList({ publications, startIndex, thematicAreas }) {
+function YearGroupedList({ publications, startIndex, thematicAreas, activeYear }) {
   // Group into ordered years
   const groups = []
   const seen = new Map()
@@ -308,12 +451,14 @@ function YearGroupedList({ publications, startIndex, thematicAreas }) {
     <div className="space-y-12">
       {groups.map(({ year, items }) => (
         <div key={year}>
-          {/* Year heading */}
-          <div className="flex items-center gap-4 mb-6">
-            <span className="text-2xl font-bold text-gray-900">{year}</span>
-            <div className="flex-1 h-px bg-gray-200" />
-            <span className="text-xs text-gray-400">{items.length} publication{items.length !== 1 ? 's' : ''}</span>
-          </div>
+          {/* Year heading — only when showing all years */}
+          {activeYear === 'all' && (
+            <div className="flex items-center gap-4 mb-6">
+              <span className="text-sm font-bold text-gray-400 shrink-0">{year}</span>
+              <div className="h-px flex-1 bg-gray-100" />
+              <span className="text-xs text-gray-400 shrink-0">{items.length} publication{items.length !== 1 ? 's' : ''}</span>
+            </div>
+          )}
 
           <div className="space-y-4">
             {items.map(({ pub, globalIdx }) => (

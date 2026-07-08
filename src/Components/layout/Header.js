@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Image from 'next/image'
@@ -53,13 +53,15 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [openSubmenu, setOpenSubmenu] = useState(null)
   const [mobileExpanded, setMobileExpanded] = useState(null)
+  const closeTimerRef = useRef(null)
   const pathname = usePathname()
 
   function handleSubmenuEnter(name) {
+    if (closeTimerRef.current) clearTimeout(closeTimerRef.current)
     setOpenSubmenu(name)
   }
   function handleSubmenuLeave() {
-    setOpenSubmenu(null)
+    closeTimerRef.current = setTimeout(() => setOpenSubmenu(null), 150)
   }
   function handleSubmenuKeyDown(e, name) {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -80,7 +82,7 @@ export default function Header() {
             <Link href="/" className="flex items-center">
               <Image
                 src="/images/ace-logo.png"
-                alt="ACE Uganda — African Center of Excellence in Bioinformatics"
+                alt="ACE Uganda — African Center of Excellence in Bioinformatics and Data Intensive Sciences"
                 width={280}
                 height={60}
                 className="h-14 w-auto"

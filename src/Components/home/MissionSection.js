@@ -16,7 +16,7 @@ export default async function MissionSection() {
         <AnimateOnScroll variant="fade-up" className="mx-auto max-w-2xl lg:text-center">
           <h2 className="text-base font-semibold leading-7 text-red-700">{homeData.missionSection.sectionTitle}</h2>
           <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Advancing Health Through Innovation
+            Advancing computational research and data science across Africa.
           </p>
           <p className="mt-6 text-lg leading-8 text-gray-600">
             {homeData.missionSection.mission}

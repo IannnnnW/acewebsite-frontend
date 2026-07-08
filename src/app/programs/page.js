@@ -10,11 +10,10 @@ async function getPrograms() {
 export default async function ProgramsPage() {
   const programs = await getPrograms()
 
-  const programsByLevel = {
-    msc: programs?.filter((p) => p.type === 'msc') || [],
-    phd: programs?.filter((p) => p.type === 'phd') || [],
-    shortcourse: programs?.filter((p) => p.type === 'shortcourse') || [],
-    internship: programs?.filter((p) => p.type === 'internship') || [],
+  const TYPE_INFO = {
+    msc:   { badge: 'MSc Program',      icon: 'graduation' },
+    phd:   { badge: 'Doctoral Program', icon: 'badge'      },
+    short: { badge: 'Short Course',     icon: 'book'       },
   }
 
   return (
@@ -35,195 +34,80 @@ export default async function ProgramsPage() {
       </div>
 
       {/* Programs Section */}
-      <div className="mx-auto max-w-7xl px-6 lg:px-8 py-24">
-        {/* MSc Programs */}
-        <div className="mb-20">
-          <div className="mb-12">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900">
-              Master's Programs
-            </h2>
-            <p className="mt-4 text-lg text-gray-600">
-              Advanced training in bioinformatics and computational biology
-            </p>
-          </div>
-          
-          {programsByLevel.msc.length > 0 ? (
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-              {programsByLevel.msc.map((program) => (
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 py-16">
+        {programs && programs.length > 0 ? (
+          <div className="flex flex-col gap-6">
+            {programs.map((program, index) => {
+              const isEven = index % 2 === 0
+              const info = TYPE_INFO[program.type] || { badge: program.type, icon: 'book' }
+
+              return (
                 <div
                   key={program._id}
-                  className="flex flex-col bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow border border-gray-200 p-8"
+                  className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow`}
                 >
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="inline-flex items-center rounded-full bg-red-50 px-3 py-1 text-sm font-medium text-red-700">
-                      MSc Program
-                    </span>
-                    {program.featured && (
-                      <span className="text-xs font-semibold text-red-700">Featured</span>
-                    )}
+                  {/* Visual panel */}
+                  <div className="lg:w-2/5 bg-gradient-to-br from-red-700 to-red-900 flex items-center justify-center p-12 min-h-[220px]">
+                    <div className="text-center">
+                      <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-white/15 mb-4">
+                        {info.icon === 'graduation' && (
+                          <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 14l9-5-9-5-9 5 9 5z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                          </svg>
+                        )}
+                        {info.icon === 'badge' && (
+                          <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                          </svg>
+                        )}
+                        {info.icon === 'book' && (
+                          <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                          </svg>
+                        )}
+                      </div>
+                      <p className="text-sm font-semibold uppercase tracking-widest text-white/70">
+                        {info.badge}
+                      </p>
+                    </div>
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                    {program.title}
-                  </h3>
-                  {program.duration && (
-                    <p className="text-sm text-gray-600 mb-4">
-                      Duration: {program.duration}
-                    </p>
-                  )}
-                  <p className="text-base text-gray-600 flex-grow">
-                    {program.description}
-                  </p>
-                  <div className="mt-6">
+
+                  {/* Content panel */}
+                  <div className="lg:w-3/5 bg-white p-8 lg:p-10 flex flex-col justify-center">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">
+                      {program.name || info.badge}
+                    </h3>
+                    {program.description && (
+                      <p className="text-gray-600 leading-relaxed mb-5">{program.description}</p>
+                    )}
+                    {program.duration && (
+                      <div className="flex items-center gap-1.5 mb-6 text-sm text-gray-500">
+                        <svg className="h-4 w-4 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        {program.duration}
+                      </div>
+                    )}
                     <Link
-                      href={`/programs/${program.slug.current}`}
-                      className="inline-flex items-center text-base font-semibold text-red-700 hover:text-red-600"
+                      href={`/programs/${program.slug?.current}`}
+                      className="self-start inline-flex items-center gap-2 rounded-lg bg-red-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-red-600 transition-colors"
                     >
-                      Learn more
-                      <svg className="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      Learn More
+                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
                     </Link>
                   </div>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-gray-500">No MSc programs available at the moment.</p>
-          )}
-        </div>
-
-        {/* PhD Programs */}
-        <div className="mb-20">
-          <div className="mb-12">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900">
-              Doctoral Programs
-            </h2>
-            <p className="mt-4 text-lg text-gray-600">
-              Research-focused PhD programs for advancing scientific knowledge
-            </p>
+              )
+            })}
           </div>
-          
-          {programsByLevel.phd.length > 0 ? (
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-              {programsByLevel.phd.map((program) => (
-                <div
-                  key={program._id}
-                  className="flex flex-col bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow border border-gray-200 p-8"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="inline-flex items-center rounded-full bg-purple-50 px-3 py-1 text-sm font-medium text-purple-700">
-                      PhD Program
-                    </span>
-                    {program.featured && (
-                      <span className="text-xs font-semibold text-red-700">Featured</span>
-                    )}
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                    {program.title}
-                  </h3>
-                  {program.duration && (
-                    <p className="text-sm text-gray-600 mb-4">
-                      Duration: {program.duration}
-                    </p>
-                  )}
-                  <p className="text-base text-gray-600 flex-grow">
-                    {program.description}
-                  </p>
-                  <div className="mt-6">
-                    <Link
-                      href={`/programs/${program.slug.current}`}
-                      className="inline-flex items-center text-base font-semibold text-red-700 hover:text-red-600"
-                    >
-                      Learn more
-                      <svg className="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                      </svg>
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-gray-500">No PhD programs available at the moment.</p>
-          )}
-        </div>
-
-        {/* Short Courses & Internships */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Short Courses */}
-          <div>
-            <div className="mb-8">
-              <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-                Short Courses
-              </h2>
-              <p className="mt-2 text-base text-gray-600">
-                Intensive training programs for skill development
-              </p>
-            </div>
-            {programsByLevel.shortcourse.length > 0 ? (
-              <div className="space-y-6">
-                {programsByLevel.shortcourse.map((program) => (
-                  <div
-                    key={program._id}
-                    className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-200 p-6"
-                  >
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                      {program.title}
-                    </h3>
-                    <p className="text-sm text-gray-600 mb-4">
-                      {program.description}
-                    </p>
-                    <Link
-                      href={`/programs/${program.slug.current}`}
-                      className="text-sm font-semibold text-red-700 hover:text-red-600"
-                    >
-                      View details →
-                    </Link>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-gray-500 text-sm">No short courses available.</p>
-            )}
+        ) : (
+          <div className="text-center py-16">
+            <p className="text-gray-500">No programs available at the moment.</p>
           </div>
-
-          {/* Internships */}
-          <div>
-            <div className="mb-8">
-              <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-                Internships
-              </h2>
-              <p className="mt-2 text-base text-gray-600">
-                Hands-on research experience for students
-              </p>
-            </div>
-            {programsByLevel.internship.length > 0 ? (
-              <div className="space-y-6">
-                {programsByLevel.internship.map((program) => (
-                  <div
-                    key={program._id}
-                    className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-200 p-6"
-                  >
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                      {program.title}
-                    </h3>
-                    <p className="text-sm text-gray-600 mb-4">
-                      {program.description}
-                    </p>
-                    <Link
-                      href={`/programs/${program.slug.current}`}
-                      className="text-sm font-semibold text-blue-900 hover:text-blue-700"
-                    >
-                      View details →
-                    </Link>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-gray-500 text-sm">No internships available.</p>
-            )}
-          </div>
-        </div>
+        )}
       </div>
 
       {/* Application CTA */}

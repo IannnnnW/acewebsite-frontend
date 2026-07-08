@@ -6,7 +6,7 @@ import ACEPattern from '@/Components/shared/ACEPattern'
 
 export const metadata = {
   title: 'Thematic Areas | ACE Uganda',
-  description: 'Explore the core research and training thematic areas at the African Center of Excellence in Bioinformatics & Data Sciences.',
+  description: 'Explore the core research and training thematic areas at the African Center of Excellence in Bioinformatics and Data Intensive Sciences.',
 }
 
 const iconMap = {

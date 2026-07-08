@@ -186,7 +186,7 @@ export default async function Footer() {
         <div className="mt-16 border-t border-gray-800 pt-8 sm:mt-20 lg:mt-24">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <p className="text-xs leading-5 text-gray-500">
-              &copy; {new Date().getFullYear()} African Center of Excellence in Bioinformatics &amp; Data-intensive Sciences. All rights reserved.
+              &copy; {new Date().getFullYear()} African Center of Excellence in Bioinformatics and Data Intensive Sciences. All rights reserved.
             </p>
             <div className="flex space-x-6">
               <Link href="/privacy" className="text-xs leading-5 text-gray-500 hover:text-red-400 transition-colors">

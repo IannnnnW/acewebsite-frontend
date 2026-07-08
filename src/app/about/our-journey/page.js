@@ -7,7 +7,7 @@ import AnimatedTimeline from '@/Components/about/AnimatedTimeline'
 
 export const metadata = {
   title: 'Our Journey | ACE Uganda',
-  description: 'Explore the milestones and history of the African Center of Excellence in Bioinformatics & Data Sciences since 2015.',
+  description: 'Explore the milestones and history of the African Center of Excellence in Bioinformatics and Data Intensive Sciences since 2015.',
 }
 
 async function getAboutData() {

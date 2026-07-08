@@ -34,6 +34,20 @@ export const siteSettingsType = defineType({
       type: 'text',
       rows: 3,
     }),
+    defineField({
+      name: 'heroTagline',
+      title: 'Hero Tagline',
+      type: 'string',
+      description: 'The permanent tagline shown on the homepage hero. This text never changes between slides. Default: "Advancing Health through Innovation"',
+      initialValue: 'Advancing Health through Innovation',
+    }),
+    defineField({
+      name: 'heroInstitutionLine',
+      title: 'Hero Institution Label',
+      type: 'string',
+      description: 'The small label shown above the tagline. Default: "African Center of Excellence · Makerere University"',
+      initialValue: 'African Center of Excellence · Makerere University',
+    }),
   ],
   preview: {
     prepare() {

@@ -5,6 +5,7 @@ export default function ACEPattern({
   gap = 10,
   opacity = 0.13,
   className = '',
+  style,
 }) {
   const w = cols * (size + gap) - gap
   const h = rows * (size + gap) - gap
@@ -30,6 +31,7 @@ export default function ACEPattern({
       height={h}
       viewBox={`0 0 ${w} ${h}`}
       className={className}
+      style={style}
       aria-hidden="true"
       role="presentation"
     >

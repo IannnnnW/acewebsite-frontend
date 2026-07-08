@@ -9,7 +9,7 @@ import AboutHeroCarousel from '@/Components/about/AboutHeroCarousel'
 
 export const metadata = {
   title: 'About | ACE Uganda',
-  description: 'Learn about the African Center of Excellence in Bioinformatics & Data Sciences — our mission, values, education programmes, and collaborations.',
+  description: 'Learn about the African Center of Excellence in Bioinformatics and Data Intensive Sciences — our mission, values, education programmes, and collaborations.',
 }
 
 async function getAboutData() {
@@ -81,7 +81,7 @@ export default async function AboutPage() {
               {aboutData?.introSection?.heading || 'About ACE'}
             </h1>
             <p className="mt-6 text-lg leading-8 text-red-100">
-              {aboutData?.introSection?.description || 'The African Center of Excellence in Bioinformatics and Data-Intensive Sciences.'}
+              {aboutData?.introSection?.description || 'The African Center of Excellence in Bioinformatics and Data Intensive Sciences.'}
             </p>
           </AnimateOnScroll>
         </div>

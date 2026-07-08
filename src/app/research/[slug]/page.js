@@ -100,7 +100,7 @@ export default async function ProjectPage({ params }) {
                     ? 'bg-emerald-500 text-white'
                     : project.status === 'completed'
                     ? 'bg-gray-500 text-white'
-                    : 'bg-purple-500 text-white'
+                    : 'bg-amber-500 text-white'
                 }`}>
                   {project.status}
                 </span>

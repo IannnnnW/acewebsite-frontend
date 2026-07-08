@@ -1,244 +1,199 @@
 'use client'
-
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { urlFor } from '@/lib/sanity'
+import ACEPattern from '@/Components/shared/ACEPattern'
 
-function SlideMedia({ slide, isActive }) {
-  const videoRef = useRef(null)
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+const SLIDE_DURATION = 7000
+
+export default function HeroCarousel({ slides, tagline, institutionLine }) {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [slideContentVisible, setSlideContentVisible] = useState(true)
+  const timerRef = useRef(null)
+
+  const startTimer = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current)
+    timerRef.current = setInterval(() => {
+      // Fade out the rotating description, swap the slide, fade back in
+      setSlideContentVisible(false)
+      setTimeout(() => {
+        setActiveIndex((prev) => (prev + 1) % slides.length)
+        setSlideContentVisible(true)
+      }, 400)
+    }, SLIDE_DURATION)
+  }, [slides.length])
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
-    setPrefersReducedMotion(mediaQuery.matches)
-    const handler = (e) => setPrefersReducedMotion(e.matches)
-    mediaQuery.addEventListener('change', handler)
-    return () => mediaQuery.removeEventListener('change', handler)
-  }, [])
-
-  useEffect(() => {
-    if (!videoRef.current) return
-    if (isActive && !prefersReducedMotion) {
-      videoRef.current.play().catch(() => {})
-    } else {
-      videoRef.current.pause()
-    }
-  }, [isActive, prefersReducedMotion])
-
-  const showVideo = slide.mediaType === 'video' && slide.videoUrl && !prefersReducedMotion
-
-  if (showVideo) {
-    return (
-      <video
-        ref={videoRef}
-        muted
-        loop
-        playsInline
-        preload={isActive ? 'auto' : 'none'}
-        poster={slide.posterImage?.url}
-        className="absolute inset-0 h-full w-full object-cover"
-      >
-        <source src={slide.videoUrl} type="video/mp4" />
-      </video>
-    )
-  }
-
-  const fallbackSrc = slide.mediaType === 'video'
-    ? slide.posterImage?.url
-    : (slide.image ? urlFor(slide.image).width(1920).height(1080).url() : null)
-
-  if (!fallbackSrc) return null
-
-  return (
-    <Image
-      src={fallbackSrc}
-      alt={slide.title}
-      fill
-      priority={isActive}
-      className="absolute inset-0 object-cover"
-    />
-  )
-}
-
-export default function HeroCarousel({ slides }) {
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
-
-  // Auto-advance slides every 5 seconds
-  useEffect(() => {
-    if (!isAutoPlaying || slides.length <= 1) return
-
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length)
-    }, 5000)
-
-    return () => clearInterval(interval)
-  }, [isAutoPlaying, slides.length])
+    startTimer()
+    return () => { if (timerRef.current) clearInterval(timerRef.current) }
+  }, [startTimer])
 
   const goToSlide = (index) => {
-    setCurrentSlide(index)
-    setIsAutoPlaying(false)
-    // Resume auto-play after 10 seconds of inactivity
-    setTimeout(() => setIsAutoPlaying(true), 10000)
+    setSlideContentVisible(false)
+    setTimeout(() => {
+      setActiveIndex(index)
+      setSlideContentVisible(true)
+    }, 400)
+    startTimer()
   }
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length)
-    setIsAutoPlaying(false)
-    setTimeout(() => setIsAutoPlaying(true), 10000)
-  }
+  if (!slides || slides.length === 0) return null
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)
-    setIsAutoPlaying(false)
-    setTimeout(() => setIsAutoPlaying(true), 10000)
-  }
+  const nextSlide = () => goToSlide((activeIndex + 1) % slides.length)
+  const prevSlide = () => goToSlide((activeIndex - 1 + slides.length) % slides.length)
 
-  if (!slides || slides.length === 0) {
-    return (
-      <div className="relative h-[600px] bg-gradient-to-br from-red-700 to-red-900 flex items-center justify-center">
-        <div className="text-center text-white px-6">
-          <h1 className="text-4xl font-bold mb-4">Welcome to ACE Uganda</h1>
-          <p className="text-xl">African Center of Excellence in Bioinformatics & Data-intensive Sciences</p>
-        </div>
-      </div>
-    )
-  }
-
-  const getCategoryColor = (category) => {
-    const colors = {
-      vr: 'bg-purple-600',
-      hpc: 'bg-blue-600',
-      research: 'bg-red-600',
-      training: 'bg-emerald-600',
-      announcement: 'bg-amber-600',
-      partnership: 'bg-indigo-600',
-    }
-    return colors[category] || 'bg-red-600'
-  }
+  const activeSlide = slides[activeIndex]
 
   return (
-    <div className="relative h-[600px] lg:h-[700px] overflow-hidden bg-gray-900">
-      {/* Slides */}
-      {slides.map((slide, index) => (
-        <div
-          key={slide._id}
-          className={`absolute inset-0 transition-opacity duration-1000 ${
-            index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
-          }`}
-        >
-          {/* Background Media */}
-          <div className="absolute inset-0">
-            <SlideMedia slide={slide} isActive={index === currentSlide} />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
+    <section className="relative w-full bg-white overflow-hidden">
+      <div className="mx-auto max-w-[1600px] flex flex-col lg:flex-row">
+
+        {/*
+         * ── LEFT — TEXT PANEL ───────────────────────────────────────────
+         * Tagline + institution label are permanent. Only the description
+         * and CTA rotate with the image on the right.
+         */}
+        <div className="relative z-10 flex flex-col justify-center px-6 sm:px-12 lg:px-16 xl:px-20 py-16 lg:py-20 lg:w-[46%] shrink-0 bg-white">
+
+          <ACEPattern
+            rows={5}
+            cols={7}
+            opacity={0.06}
+            className="hidden lg:block absolute top-10 right-10 pointer-events-none"
+          />
+
+          <p className="text-xs font-bold uppercase tracking-[0.22em] text-red-700 mb-5">
+            {institutionLine || 'African Center of Excellence · Makerere University'}
+          </p>
+
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.25rem] font-extrabold text-gray-900 leading-[1.12] tracking-tight max-w-xl">
+            {tagline || 'Advancing Health through Innovation'}
+          </h1>
+
+          <div className="mt-6 mb-6 flex items-center gap-2" aria-hidden="true">
+            <div className="h-[3px] w-10 bg-red-700 rounded-full" />
+            <div className="h-[3px] w-3 bg-red-200 rounded-full" />
           </div>
 
-          {/* Content */}
-          <div className="relative h-full flex items-center">
-            <div className="mx-auto max-w-7xl px-6 lg:px-8 w-full">
-              <div className="max-w-2xl">
-                {/* Category Badge */}
-                <div className="mb-6">
-                  <span className={`inline-flex items-center rounded-full ${getCategoryColor(slide.category)} px-4 py-2 text-sm font-semibold text-white`}>
-                    {slide.category === 'vr' && '🥽 VR Lab'}
-                    {slide.category === 'hpc' && '💻 HPC Cluster'}
-                    {slide.category === 'research' && '🔬 Research'}
-                    {slide.category === 'training' && '🎓 Training'}
-                    {slide.category === 'announcement' && '📢 Announcement'}
-                    {slide.category === 'partnership' && '🤝 Partnership'}
-                  </span>
-                </div>
+          {/* Rotating per-slide description + CTA */}
+          <div
+            key={activeSlide._id}
+            className="transition-all duration-500"
+            style={{
+              opacity: slideContentVisible ? 1 : 0,
+              transform: slideContentVisible ? 'translateY(0)' : 'translateY(8px)',
+            }}
+          >
+            {activeSlide.description && (
+              <p className="text-base lg:text-lg text-gray-600 leading-relaxed max-w-md mb-8">
+                {activeSlide.description}
+              </p>
+            )}
 
-                {/* Subtitle */}
-                {slide.subtitle && (
-                  <p className="text-red-400 text-lg font-medium mb-3 animate-fade-in">
-                    {slide.subtitle}
-                  </p>
-                )}
+            {activeSlide.ctaText && activeSlide.ctaLink && (
+              <Link
+                href={activeSlide.ctaLink}
+                className="inline-flex items-center gap-2 rounded-md bg-red-700 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-red-800 hover:shadow-md"
+              >
+                {activeSlide.ctaText}
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            )}
+          </div>
 
-                {/* Title */}
-                <h2 className="text-4xl lg:text-6xl font-bold text-white mb-6 animate-slide-up">
-                  {slide.title}
-                </h2>
+          {/* Navigation — dots + arrows, understated and professional */}
+          {slides.length > 1 && (
+            <div className="mt-12 flex items-center gap-6">
+              <div className="flex items-center gap-2" role="tablist" aria-label="Hero slides">
+                {slides.map((_, i) => (
+                  <button
+                    key={i}
+                    role="tab"
+                    aria-selected={i === activeIndex}
+                    aria-label={`Slide ${i + 1}`}
+                    onClick={() => goToSlide(i)}
+                    className="rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-700"
+                    style={{
+                      height: '6px',
+                      width: i === activeIndex ? '28px' : '6px',
+                      backgroundColor: i === activeIndex ? '#a71c20' : '#e5e7eb',
+                    }}
+                  />
+                ))}
+              </div>
 
-                {/* Description */}
-                <p className="text-lg lg:text-xl text-gray-200 mb-8 leading-relaxed animate-fade-in">
-                  {slide.description}
-                </p>
-
-                {/* CTA Button */}
-                <div className="flex gap-4 animate-slide-up">
-                  <Link
-                    href={slide.ctaLink}
-                    className="inline-flex items-center rounded-md bg-red-700 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-red-600 transition-all hover:scale-105"
-                  >
-                    {slide.ctaText || 'Learn More'}
-                    <svg className="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </Link>
-                  <Link
-                    href="/contact"
-                    className="inline-flex items-center rounded-md bg-white/10 backdrop-blur-sm border-2 border-white px-6 py-3 text-base font-semibold text-white hover:bg-white/20 transition-all"
-                  >
-                    Get in Touch
-                  </Link>
-                </div>
+              <div className="flex items-center gap-2 ml-auto">
+                <button
+                  onClick={prevSlide}
+                  aria-label="Previous slide"
+                  className="rounded-full border border-gray-300 p-2 text-gray-500 transition-colors hover:border-red-700 hover:text-red-700"
+                >
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                <button
+                  onClick={nextSlide}
+                  aria-label="Next slide"
+                  className="rounded-full border border-gray-300 p-2 text-gray-500 transition-colors hover:border-red-700 hover:text-red-700"
+                >
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
               </div>
             </div>
-          </div>
+          )}
         </div>
-      ))}
 
-      {/* Navigation Arrows */}
-      {slides.length > 1 && (
-        <>
-          <button
-            onClick={prevSlide}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 rounded-full bg-white/20 backdrop-blur-sm p-3 text-white hover:bg-white/30 transition-all"
-            aria-label="Previous slide"
-          >
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <button
-            onClick={nextSlide}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 rounded-full bg-white/20 backdrop-blur-sm p-3 text-white hover:bg-white/30 transition-all"
-            aria-label="Next slide"
-          >
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </>
-      )}
-
-      {/* Dots Indicator */}
-      {slides.length > 1 && (
-        <div className="absolute bottom-8 left-0 right-0 z-20 flex justify-center gap-2">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`h-2 rounded-full transition-all ${
-                index === currentSlide 
-                  ? 'w-8 bg-red-600' 
-                  : 'w-2 bg-white/50 hover:bg-white/80'
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
+        {/*
+         * ── RIGHT — IMAGE PANEL ─────────────────────────────────────────
+         * Completely free of overlaid text. Images/video crossfade;
+         * a thin red accent bar ties it back to the brand.
+         */}
+        <div className="relative h-[320px] sm:h-[420px] lg:h-auto lg:flex-1 overflow-hidden bg-gray-100">
+          {slides.map((slide, i) => (
+            <div
+              key={slide._id}
+              className="absolute inset-0 transition-opacity duration-[1200ms]"
+              style={{ opacity: i === activeIndex ? 1 : 0 }}
+              aria-hidden={i !== activeIndex}
+            >
+              {slide.videoUrl && slide.mediaType === 'video' ? (
+                <video
+                  autoPlay={i === activeIndex}
+                  muted
+                  loop
+                  playsInline
+                  poster={slide.posterImage?.url}
+                  className="absolute inset-0 h-full w-full object-cover"
+                >
+                  <source src={slide.videoUrl} type="video/mp4" />
+                </video>
+              ) : slide.image ? (
+                <Image
+                  src={urlFor(slide.image).width(1600).height(1300).quality(85).url()}
+                  alt={slide.description || ''}
+                  fill
+                  priority={i === 0}
+                  className="object-cover"
+                  sizes="(min-width: 1024px) 54vw, 100vw"
+                />
+              ) : null}
+            </div>
           ))}
-        </div>
-      )}
 
-      {/* Slide Counter */}
-      {slides.length > 1 && (
-        <div className="absolute top-8 right-8 z-20 rounded-full bg-black/50 backdrop-blur-sm px-4 py-2 text-sm font-medium text-white">
-          {currentSlide + 1} / {slides.length}
+          {/* Subtle vignette for photographic depth — not for text legibility */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent pointer-events-none" />
+
+          {/* Brand accent — thin red edge where the two panels meet */}
+          <div className="hidden lg:block absolute inset-y-0 left-0 w-1.5 bg-red-700" />
         </div>
-      )}
-    </div>
+
+      </div>
+    </section>
   )
 }

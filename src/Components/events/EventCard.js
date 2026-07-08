@@ -40,7 +40,7 @@ export default function EventCard({ event, index = 0 }) {
   const getCategoryColor = (category) => {
     const colors = {
       workshop: 'bg-blue-600',
-      seminar: 'bg-purple-600',
+      seminar: 'bg-teal-600',
       conference: 'bg-red-600',
       training: 'bg-emerald-600',
       webinar: 'bg-amber-600',

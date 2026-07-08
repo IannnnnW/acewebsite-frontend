@@ -19,9 +19,10 @@ export const heroSlide = defineType({
     }),
     defineField({
       name: 'description',
-      title: 'Description',
+      title: 'Slide Context',
       type: 'text',
-      rows: 3,
+      rows: 2,
+      description: 'One or two sentences describing what is shown in the background image for this slide (e.g. "Researchers at ACE\'s HPC facility analyse genomic data to accelerate disease research across Africa."). Keep it under 180 characters.',
       validation: Rule => Rule.required(),
     }),
     defineField({

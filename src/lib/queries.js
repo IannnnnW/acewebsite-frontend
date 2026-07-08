@@ -31,7 +31,9 @@ export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
   title,
   socials,
   contactEmail,
-  address
+  address,
+  heroTagline,
+  heroInstitutionLine
 }`
 
 export const heroSlidesQuery = `

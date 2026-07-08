@@ -6,7 +6,7 @@ import ACEPattern from '@/Components/shared/ACEPattern'
 
 export const metadata = {
   title: 'Facilities | ACE Uganda',
-  description: 'Explore the world-class computing, visualization, and learning facilities at the African Center of Excellence in Bioinformatics & Data Sciences.',
+  description: 'Explore the world-class computing, visualization, and learning facilities at the African Center of Excellence in Bioinformatics and Data Intensive Sciences.',
 }
 
 const typeLabels = {

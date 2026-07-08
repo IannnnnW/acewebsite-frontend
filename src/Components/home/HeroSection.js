@@ -18,7 +18,7 @@ export default function HeroSection() {
           </h1>
           
           <p className="mt-6 text-lg leading-8 text-red-100 sm:text-xl animate-fade-in">
-            African Center of Excellence in Bioinformatics & Data-intensive Sciences
+            African Center of Excellence in Bioinformatics and Data Intensive Sciences
           </p>
           
           <p className="mt-4 text-base leading-7 text-red-200 max-w-2xl mx-auto animate-slide-up">

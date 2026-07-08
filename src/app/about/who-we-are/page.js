@@ -6,7 +6,7 @@ import ACEPattern from '@/Components/shared/ACEPattern'
 
 export const metadata = {
   title: 'Who We Are | ACE Uganda',
-  description: 'Learn about the African Center of Excellence in Bioinformatics & Data Sciences — our founding partnership, facilities, and mission.',
+  description: 'Learn about the African Center of Excellence in Bioinformatics and Data Intensive Sciences — our founding partnership, facilities, and mission.',
 }
 
 async function getAboutData() {
@@ -20,7 +20,7 @@ export default async function WhoWeArePage() {
   const aboutData = await getAboutData()
 
   const bodyText = aboutData?.whoWeAreSection?.body ||
-    'The Infectious Diseases Institute (IDI), Makerere University\'s College of Computing & Health Sciences in partnership with the US Government National Institute of Allergy and Infectious Diseases and the Office of Cyber Infrastructure and Computational Biology (NIH/NIAID/OCICB) have established the African Center of Excellence in Bioinformatics & Data Sciences — one of only two such centres on the African continent.\n\nFirst of its kind on the Makerere campus, the ACE is a centre for Computational Biology and Big Data analysis. It houses a dedicated High-Performance Computing cluster, a Tele-learning Centre, collaborative rooms, and a Virtual Reality room for the latest 3D & VR pedagogical and diagnostic approaches. Layered over those facilities are professionally curated long-term (MSc & PhD) and short-term (Certificate) academic programmes, as well as research and development support units.'
+    'The Infectious Diseases Institute (IDI), Makerere University\'s College of Computing & Health Sciences in partnership with the US Government National Institute of Allergy and Infectious Diseases and the Office of Cyber Infrastructure and Computational Biology (NIH/NIAID/OCICB) have established the African Center of Excellence in Bioinformatics and Data Intensive Sciences — one of only two such centers on the African continent.\n\nFirst of its kind on the Makerere campus, the ACE is a center for Computational Biology and Big Data analysis. It houses a dedicated High-Performance Computing cluster, a Tele-learning Center, collaborative rooms, and a Virtual Reality room for the latest 3D & VR pedagogical and diagnostic approaches. Layered over those facilities are professionally curated long-term (MSc & PhD) and short-term (Certificate) academic programmes, as well as research and development support units.'
 
   const paragraphs = bodyText.split(/\n\n+/).filter(Boolean)
 
@@ -50,7 +50,7 @@ export default async function WhoWeArePage() {
         </svg>
       ),
       label: 'Distinction',
-      value: 'One of 2 such centres in Africa',
+      value: 'One of 2 such centers in Africa',
     },
   ]
 
@@ -71,7 +71,7 @@ export default async function WhoWeArePage() {
               Who We Are
             </h1>
             <p className="mt-4 text-lg text-red-100 max-w-2xl">
-              {aboutData?.introSection?.description || 'One of only two African Centers of Excellence in Bioinformatics & Data Sciences on the continent.'}
+              {aboutData?.introSection?.description || 'One of only two African Centers of Excellence in Bioinformatics and Data Intensive Sciences on the continent.'}
             </p>
           </AnimateOnScroll>
         </div>

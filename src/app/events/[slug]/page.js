@@ -37,7 +37,7 @@ export default async function EventDetailsPage({ params }) {
   const getCategoryColor = (category) => {
     const colors = {
       workshop: 'from-blue-600 to-blue-700',
-      seminar: 'from-purple-600 to-purple-700',
+      seminar: 'from-teal-600 to-teal-700',
       conference: 'from-red-600 to-red-700',
       training: 'from-emerald-600 to-emerald-700',
       webinar: 'from-amber-600 to-amber-700',
