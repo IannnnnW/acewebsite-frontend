@@ -21,7 +21,13 @@
       "Bash(sed -n '90,110p' /Users/wasukira/Projects/acewebsite-frontend/src/app/research/[slug]/page.js)",
       "Bash(sed -n '25,50p' /Users/wasukira/Projects/acewebsite-frontend/src/app/events/[slug]/page.js)",
       "Bash(curl -s http://localhost:3000/ --max-time 10 -o /tmp/hero_split_check.html)",
-      "Bash(curl -s http://localhost:3000/events --max-time 10)"
+      "Bash(curl -s http://localhost:3000/events --max-time 10)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/ --max-time 15)",
+      "Bash(curl -s http://localhost:3000/ --max-time 15 -o /tmp/home_check.html)",
+      "Bash(grep -o \"featuredProjects\\\\|No upcoming\\\\|research/\" /tmp/home_check.html | sort -u | head -5 *)",
+      "Read(//private/tmp/**)",
+      "Bash(grep -oE \"aspect-square|aspect-video|grayscale|whoWeAreImage|Upload a facility image\" /tmp/home_check.html | sort -u *)",
+      "Bash(grep -o \"Latest News\\\\|py-16 bg-gray-50\\\\|MSc and PhD students trained\\\\|equips researchers\\\\|Africa.s Center for Bioinformatics\" /tmp/home_check.html | sort -u)"
     ]
   }
 }
