@@ -36,26 +36,14 @@ export default async function EventDetailsPage({ params }) {
 
   const getCategoryColor = (category) => {
     const colors = {
-      workshop: 'from-blue-600 to-blue-700',
-      seminar: 'from-teal-600 to-teal-700',
-      conference: 'from-red-600 to-red-700',
-      training: 'from-emerald-600 to-emerald-700',
-      webinar: 'from-amber-600 to-amber-700',
-      networking: 'from-indigo-600 to-indigo-700',
+      workshop: 'from-red-700 to-red-900',
+      seminar: 'from-red-800 to-red-950',
+      conference: 'from-red-700 to-red-800',
+      training: 'from-red-600 to-red-800',
+      webinar: 'from-red-900 to-red-950',
+      networking: 'from-red-700 to-red-900',
     }
-    return colors[category] || 'from-gray-600 to-gray-700'
-  }
-
-  const getCategoryIcon = (category) => {
-    const icons = {
-      workshop: '🔧',
-      seminar: '🎤',
-      conference: '🎓',
-      training: '📚',
-      webinar: '💻',
-      networking: '🤝',
-    }
-    return icons[category] || '📅'
+    return colors[category] || 'from-red-700 to-red-900'
   }
 
   const formatDate = (dateString) => {
@@ -120,7 +108,9 @@ export default async function EventDetailsPage({ params }) {
               {/* Category Badge */}
               <div className="mb-6">
                 <span className="inline-flex items-center gap-2 rounded-full bg-white/20 backdrop-blur-sm px-4 py-2 text-sm font-semibold text-white">
-                  <span className="text-xl">{getCategoryIcon(event.category)}</span>
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
                   {event.category?.toUpperCase()}
                 </span>
               </div>
@@ -279,7 +269,7 @@ export default async function EventDetailsPage({ params }) {
       )}
 
       {/* CTA Section */}
-      <div className="bg-gradient-to-r from-red-700 to-red-900 py-16">
+      <div className="bg-gradient-to-br from-red-700 to-red-900 py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
