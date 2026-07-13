@@ -11,7 +11,7 @@ const CATEGORY_ORDER = [
   { value: 'ai', label: 'AI Researchers' },
   { value: 'phd_fellows', label: 'PhD Fellows' },
   { value: 'msc_fellows', label: 'MSc Fellows' },
-  { value: 'it', label: 'IT' },
+  { value: 'it', label: 'Engineering' },
   { value: 'interns', label: 'Interns' },
 ]
 

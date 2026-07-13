@@ -346,6 +346,18 @@ export const eventBySlugQuery = `
     topics,
     capacity,
     registrationLink,
+    "agendaFile": agendaFile.asset->url,
+    "conceptNoteFile": conceptNoteFile.asset->url,
+    outputs[] { _key, title, type, url, description },
+    "relatedBlogs": relatedBlogs[]->{
+      _id,
+      title,
+      slug,
+      publishedAt,
+      excerpt,
+      "featuredImage": images[0] { "url": asset->url }
+    },
+    tweetUrls,
     galleryTitle,
     gallery[] {
       _key,
@@ -358,6 +370,29 @@ export const eventBySlugQuery = `
       "blurDataURL": image.asset->metadata.lqip
     },
     "detailsLink": "/events/" + slug.current
+  }
+`
+
+// Latest social media posts for the homepage running feed
+export const socialPostsQuery = `
+  *[_type == "socialPost"] | order(postDate desc) [0...4] {
+    _id,
+    platform,
+    url,
+    caption,
+    postDate
+  }
+`
+
+// Latest blog stories for the homepage running feed
+export const recentBlogPostsQuery = `
+  *[_type == "blogPost"] | order(publishedAt desc) [0...3] {
+    _id,
+    title,
+    slug,
+    publishedAt,
+    excerpt,
+    "featuredImage": images[0] { "url": asset->url }
   }
 `
 

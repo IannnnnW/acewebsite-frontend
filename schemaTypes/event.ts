@@ -90,6 +90,69 @@ export const eventType = defineType({
       type: 'url',
     }),
     defineField({
+      name: 'agendaFile',
+      title: 'Agenda (PDF)',
+      type: 'file',
+      description: 'The event agenda / programme, offered as a download on the event page.',
+      options: { accept: '.pdf' },
+    }),
+    defineField({
+      name: 'conceptNoteFile',
+      title: 'Concept Note (PDF)',
+      type: 'file',
+      description: 'The event concept note, offered as a download on the event page.',
+      options: { accept: '.pdf' },
+    }),
+    defineField({
+      name: 'outputs',
+      title: 'Event Outputs',
+      type: 'array',
+      description: 'Links to what came out of the event — GitHub repos, published papers, datasets, slides. Shown on past events.',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({ name: 'title', title: 'Title', type: 'string', validation: (Rule) => Rule.required() }),
+            defineField({
+              name: 'type',
+              title: 'Type',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'GitHub Repository', value: 'github' },
+                  { title: 'Published Paper', value: 'paper' },
+                  { title: 'Dataset', value: 'dataset' },
+                  { title: 'Slides', value: 'slides' },
+                  { title: 'Report', value: 'report' },
+                  { title: 'Other', value: 'other' },
+                ],
+              },
+              initialValue: 'other',
+            }),
+            defineField({ name: 'url', title: 'URL', type: 'url', validation: (Rule) => Rule.required() }),
+            defineField({ name: 'description', title: 'Short Description', type: 'string' }),
+          ],
+          preview: {
+            select: { title: 'title', subtitle: 'type' },
+          },
+        },
+      ],
+    }),
+    defineField({
+      name: 'relatedBlogs',
+      title: 'Related Blog Posts',
+      type: 'array',
+      description: 'Blog posts about this event — shown as "Related Stories" on the event page.',
+      of: [{ type: 'reference', to: [{ type: 'blogPost' }] }],
+    }),
+    defineField({
+      name: 'tweetUrls',
+      title: 'Tweets (X Posts)',
+      type: 'array',
+      description: 'Links to X/Twitter posts about this event (e.g. https://x.com/ACEUganda/status/123…). Rendered as an embedded tweet feed, mainly for past events.',
+      of: [{ type: 'url' }],
+    }),
+    defineField({
       name: 'isPast',
       title: 'Is Past Event',
       type: 'boolean',

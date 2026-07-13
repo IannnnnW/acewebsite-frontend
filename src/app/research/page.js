@@ -89,18 +89,25 @@ export default function ResearchPage() {
         </div>
       </div>
 
-      {/* Thematic Area Filter */}
+      {/* Thematic Area Filter — same tab styling as the Events page */}
       <div className="sticky top-0 z-20 bg-white border-b border-gray-200 shadow-sm">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="flex items-center gap-2 py-3 overflow-x-auto scrollbar-none">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8 py-4">
+          <div className="flex items-center gap-2 mb-2">
+            <svg className="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 6h.008v.008H6V6z" />
+            </svg>
+            <span className="text-sm font-semibold text-gray-700">Thematic Areas</span>
+          </div>
+          <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-1">
             {THEMATIC_AREAS.map((area) => (
               <button
                 key={area.value}
                 onClick={() => setActiveArea(area.value)}
-                className={`shrink-0 rounded-full px-4 py-1.5 text-sm font-medium transition-all ${
+                className={`shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all ${
                   activeArea === area.value
-                    ? 'bg-red-700 text-white shadow-sm'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    ? 'bg-red-700 text-white shadow-md scale-105'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:scale-105'
                 }`}
               >
                 {area.label}

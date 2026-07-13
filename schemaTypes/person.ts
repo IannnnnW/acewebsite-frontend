@@ -45,7 +45,7 @@ export const personType = defineType({
       options: {
         list: [
           {title: 'Admin', value: 'admin'},
-          {title: 'IT', value: 'it'},
+          {title: 'Engineering', value: 'it'},
           {title: 'Interns', value: 'interns'},
           {title: 'MSc Fellows', value: 'msc_fellows'},
           {title: 'PhD Fellows', value: 'phd_fellows'},

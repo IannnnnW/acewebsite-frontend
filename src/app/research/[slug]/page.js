@@ -21,6 +21,51 @@ const THEMATIC_AREA_LABELS = {
   other_bioinformatics: 'Other Bioinformatics',
 }
 
+function PersonLink({ person }) {
+  const name = person?.name
+  if (!name) return null
+  if (!person.slug?.current) return <span className="font-medium text-gray-900">{name}</span>
+  return (
+    <Link
+      href={`/team/${person.slug.current}`}
+      className="font-medium text-red-700 underline decoration-red-200 underline-offset-2 hover:text-red-600 hover:decoration-red-400 transition-colors"
+    >
+      {name}
+    </Link>
+  )
+}
+
+// Renders the investigators as a sentence inside the description text,
+// with names as inline links rather than standalone profile cards.
+function InvestigatorsSentence({ pi, coPis }) {
+  const copis = (coPis || []).filter((p) => p?.name)
+  if (!pi?.name && copis.length === 0) return null
+
+  return (
+    <p className="mt-4 text-gray-700 leading-relaxed">
+      {pi?.name && (
+        <>
+          This project is led by <PersonLink person={pi} />
+          {pi.role ? ` (${pi.role})` : ''}
+        </>
+      )}
+      {copis.length > 0 && (
+        <>
+          {pi?.name ? ', together with ' : 'This project is co-led by '}
+          {copis.length === 1 ? 'co-principal investigator ' : 'co-principal investigators '}
+          {copis.map((copi, i) => (
+            <span key={copi._id || i}>
+              <PersonLink person={copi} />
+              {i < copis.length - 2 ? ', ' : i === copis.length - 2 ? ' and ' : ''}
+            </span>
+          ))}
+        </>
+      )}
+      .
+    </p>
+  )
+}
+
 export async function generateStaticParams() {
   const projects = await client.fetch(allProjectsQuery)
   return projects.map((project) => ({
@@ -124,12 +169,15 @@ export default async function ProjectPage({ params }) {
       {/* Content */}
       <div className="mx-auto max-w-4xl px-6 py-16 lg:px-8 space-y-12">
 
-        {/* Description */}
-        {project.description && (
+        {/* Description — with the investigators woven into the text */}
+        {(project.description || project.pi || project.coPrincipalInvestigators?.length > 0) && (
           <AnimateOnScroll variant="fade-up">
             <section>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Project Description</h2>
-              <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{project.description}</p>
+              {project.description && (
+                <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{project.description}</p>
+              )}
+              <InvestigatorsSentence pi={project.pi} coPis={project.coPrincipalInvestigators} />
             </section>
           </AnimateOnScroll>
         )}
@@ -189,78 +237,6 @@ export default async function ProjectPage({ params }) {
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Relevance to the Sector</h2>
               <div className="rounded-2xl bg-red-50 p-6">
                 <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{project.relevanceToSector}</p>
-              </div>
-            </section>
-          </AnimateOnScroll>
-        )}
-
-        {/* Principal Investigator */}
-        {project.pi && (
-          <AnimateOnScroll variant="fade-up">
-            <section className="border-t border-gray-200 pt-12">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Principal Investigator</h2>
-              <Link
-                href={`/team/${project.pi.slug?.current}`}
-                className="inline-flex items-center gap-4 rounded-2xl border border-gray-200 bg-white px-5 py-4 shadow-sm hover:border-red-200 hover:shadow-md transition-all group w-full sm:w-auto"
-              >
-                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full bg-gray-100 ring-2 ring-white shadow">
-                  {project.pi.image?.url ? (
-                    <Image
-                      src={project.pi.image.url}
-                      alt={project.pi.name}
-                      fill
-                      className="object-cover"
-                    />
-                  ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-red-100 to-red-200">
-                      <svg className="h-8 w-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                      </svg>
-                    </div>
-                  )}
-                </div>
-                <div>
-                  <p className="font-semibold text-gray-900 group-hover:text-red-700 transition-colors">{project.pi.name}</p>
-                  {project.pi.role && <p className="text-sm text-gray-500 mt-0.5">{project.pi.role}</p>}
-                  <p className="text-xs text-red-700 font-medium mt-1">View Profile →</p>
-                </div>
-              </Link>
-            </section>
-          </AnimateOnScroll>
-        )}
-
-        {/* Co-Principal Investigators */}
-        {project.coPrincipalInvestigators && project.coPrincipalInvestigators.length > 0 && (
-          <AnimateOnScroll variant="fade-up">
-            <section className="border-t border-gray-200 pt-12">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                {project.coPrincipalInvestigators.length === 1 ? 'Co-Principal Investigator' : 'Co-Principal Investigators'}
-              </h2>
-              <div className="flex flex-col gap-3">
-                {project.coPrincipalInvestigators.map((copi) => (
-                  <Link
-                    key={copi._id}
-                    href={`/team/${copi.slug?.current}`}
-                    className="inline-flex items-center gap-4 rounded-2xl border border-gray-200 bg-white px-5 py-4 shadow-sm hover:border-red-200 hover:shadow-md transition-all group w-full sm:w-auto sm:w-fit"
-                  >
-                    <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full bg-gray-100 ring-2 ring-white shadow">
-                      {copi.image?.url ? (
-                        <Image src={copi.image.url} alt={copi.name} fill className="object-cover" />
-                      ) : (
-                        <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-red-100 to-red-200">
-                          <svg className="h-8 w-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                          </svg>
-                        </div>
-                      )}
-                    </div>
-                    <div>
-                      <p className="font-semibold text-gray-900 group-hover:text-red-700 transition-colors">{copi.name}</p>
-                      {copi.role && <p className="text-sm text-gray-500 mt-0.5">{copi.role}</p>}
-                      <p className="text-xs text-red-700 font-medium mt-1">View Profile →</p>
-                    </div>
-                  </Link>
-                ))}
               </div>
             </section>
           </AnimateOnScroll>

@@ -1,9 +1,24 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { Tweet } from 'react-tweet'
 import { client } from '@/lib/sanity'
 import { eventBySlugQuery, allEventsQuery } from '@/lib/queries'
 import { notFound } from 'next/navigation'
 import EventGallery from '@/Components/events/EventGallery'
+
+function tweetIdFromUrl(url) {
+  const match = url?.match(/status(?:es)?\/(\d+)/)
+  return match ? match[1] : null
+}
+
+const OUTPUT_TYPE_META = {
+  github: { label: 'GitHub Repository', icon: 'M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12', fill: true },
+  paper: { label: 'Published Paper', icon: 'M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z' },
+  dataset: { label: 'Dataset', icon: 'M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375' },
+  slides: { label: 'Slides', icon: 'M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5' },
+  report: { label: 'Report', icon: 'M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z' },
+  other: { label: 'Resource', icon: 'M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244' },
+}
 
 export const revalidate = 60 // Revalidate every 60 seconds
 
@@ -200,6 +215,38 @@ export default async function EventDetailsPage({ params }) {
             <div className="prose prose-lg text-gray-700">
               <p>{event.description}</p>
             </div>
+
+            {/* Event Documents — Agenda & Concept Note */}
+            {(event.agendaFile || event.conceptNoteFile) && (
+              <div className="mt-10 flex flex-wrap gap-4">
+                {event.agendaFile && (
+                  <a
+                    href={event.agendaFile}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2.5 rounded-xl bg-red-700 px-5 py-3 text-sm font-semibold text-white hover:bg-red-800 transition-colors"
+                  >
+                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                    </svg>
+                    Download Agenda
+                  </a>
+                )}
+                {event.conceptNoteFile && (
+                  <a
+                    href={event.conceptNoteFile}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2.5 rounded-xl border border-red-300 px-5 py-3 text-sm font-semibold text-red-700 hover:bg-red-50 transition-colors"
+                  >
+                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                    </svg>
+                    Concept Note
+                  </a>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -264,6 +311,106 @@ export default async function EventDetailsPage({ params }) {
         <div className="py-16 bg-gray-50">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <EventGallery images={event.gallery} title={event.galleryTitle} />
+          </div>
+        </div>
+      )}
+
+      {/* Event Outputs — what came out of the event */}
+      {event.outputs && event.outputs.length > 0 && (
+        <div className="py-16 bg-white">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-3xl">
+              <h2 className="text-3xl font-bold text-gray-900 mb-3">Event Outputs</h2>
+              <p className="text-gray-600 mb-8">Resources and results produced from this event</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {event.outputs.map((output) => {
+                  const meta = OUTPUT_TYPE_META[output.type] || OUTPUT_TYPE_META.other
+                  return (
+                    <a
+                      key={output._key}
+                      href={output.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-start gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm hover:shadow-md hover:border-red-200 transition-all"
+                    >
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-red-50 text-red-700">
+                        {meta.fill ? (
+                          <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d={meta.icon} /></svg>
+                        ) : (
+                          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d={meta.icon} /></svg>
+                        )}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-0.5">{meta.label}</p>
+                        <p className="font-semibold text-gray-900 group-hover:text-red-700 transition-colors leading-snug">{output.title}</p>
+                        {output.description && <p className="mt-1 text-sm text-gray-500 line-clamp-2">{output.description}</p>}
+                      </div>
+                    </a>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Related Stories — blog posts about this event */}
+      {event.relatedBlogs && event.relatedBlogs.length > 0 && (
+        <div className="py-16 bg-gray-50">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-3xl">
+              <h2 className="text-3xl font-bold text-gray-900 mb-8">Related Stories</h2>
+              <div className="space-y-4">
+                {event.relatedBlogs.map((post) => (
+                  <Link
+                    key={post._id}
+                    href={`/blog/${post.slug?.current}`}
+                    className="group flex gap-4 rounded-2xl border border-gray-100 bg-white p-4 shadow-sm hover:shadow-md hover:border-red-200 transition-all"
+                  >
+                    <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-gray-100">
+                      {post.featuredImage?.url ? (
+                        <Image src={post.featuredImage.url} alt={post.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
+                      ) : (
+                        <div className="absolute inset-0 bg-gradient-to-br from-red-700 to-red-900" />
+                      )}
+                    </div>
+                    <div className="min-w-0">
+                      {post.publishedAt && (
+                        <p className="text-xs text-gray-400 mb-1">
+                          {new Date(post.publishedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+                        </p>
+                      )}
+                      <h3 className="font-bold text-gray-900 group-hover:text-red-700 transition-colors leading-snug line-clamp-2">{post.title}</h3>
+                      {post.excerpt && <p className="mt-1 text-sm text-gray-500 line-clamp-2">{post.excerpt}</p>}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Tweet feed — social coverage of the event */}
+      {event.tweetUrls && event.tweetUrls.length > 0 && (
+        <div className="py-16 bg-white" data-theme="light">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-3xl">
+              <h2 className="text-3xl font-bold text-gray-900 mb-3">From the Conversation</h2>
+              <p className="text-gray-600 mb-8">Highlights from X about this event</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 [&_.react-tweet-theme]:!my-0 [&_.react-tweet-theme]:!max-w-none">
+                {event.tweetUrls.map((url, i) => {
+                  const id = tweetIdFromUrl(url)
+                  return id ? (
+                    <Tweet key={id} id={id} />
+                  ) : (
+                    <a key={i} href={url} target="_blank" rel="noopener noreferrer" className="text-sm text-red-700 hover:text-red-600 font-medium">
+                      {url}
+                    </a>
+                  )
+                })}
+              </div>
+            </div>
           </div>
         </div>
       )}

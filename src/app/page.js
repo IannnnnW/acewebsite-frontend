@@ -1,22 +1,32 @@
 import { client } from '@/lib/sanity'
-import { settingsQuery, featuredPostsQuery, heroSlidesQuery, siteSettingsQuery } from '@/lib/queries'
+import {
+  settingsQuery,
+  featuredPostsQuery,
+  heroSlidesQuery,
+  siteSettingsQuery,
+  socialPostsQuery,
+  recentBlogPostsQuery,
+} from '@/lib/queries'
 import HeroCarousel from '@/Components/home/HeroCarousel'
 import MissionSection from '@/Components/home/MissionSection'
 import FocusAreasSection from '@/Components/home/FocusAreasSection'
 import StatsSection from '@/Components/home/StatsSection'
 import PartnershipsSection from '@/Components/home/PartnershipSection'
+import SocialFeedSection from '@/Components/home/SocialFeedSection'
 
 async function getData() {
   const settings = await client.fetch(settingsQuery)
   const siteSettings = await client.fetch(siteSettingsQuery)
   const featuredPosts = await client.fetch(featuredPostsQuery)
   const heroSlides = await client.fetch(heroSlidesQuery)
+  const socialPosts = await client.fetch(socialPostsQuery)
+  const recentBlogPosts = await client.fetch(recentBlogPostsQuery)
 
-  return { settings, siteSettings, featuredPosts, heroSlides }
+  return { settings, siteSettings, featuredPosts, heroSlides, socialPosts, recentBlogPosts }
 }
 
 export default async function Home() {
-  const { settings, siteSettings, featuredPosts, heroSlides } = await getData()
+  const { settings, siteSettings, featuredPosts, heroSlides, socialPosts, recentBlogPosts } = await getData()
 
   return (
     <>
@@ -80,6 +90,9 @@ export default async function Home() {
           </div>
         </section>
       )}
+
+      {/* Running social posts + stories */}
+      <SocialFeedSection socialPosts={socialPosts} blogPosts={recentBlogPosts} />
     </>
   )
 }
