@@ -127,10 +127,10 @@ export const aboutPage =  defineType({
         }
       ]
     },
-    // Services Section
+    // Thematic Areas Section
     {
-      name: 'servicesSection',
-      title: 'Services Section',
+      name: 'thematicAreasSection',
+      title: 'Thematic Areas Section',
       type: 'object',
       fields: [
         {
@@ -146,8 +146,8 @@ export const aboutPage =  defineType({
           rows: 3
         },
         {
-          name: 'services',
-          title: 'Services Offered',
+          name: 'thematicAreas',
+          title: 'Thematic Areas',
           type: 'array',
           of: [
             {
@@ -155,7 +155,7 @@ export const aboutPage =  defineType({
               fields: [
                 {
                   name: 'title',
-                  title: 'Service Title',
+                  title: 'Thematic Area',
                   type: 'string',
                   validation: rule => rule.required()
                 },
@@ -176,7 +176,7 @@ export const aboutPage =  defineType({
                   title: 'Key Features',
                   type: 'array',
                   of: [{type: 'string'}],
-                  description: 'List of key features or benefits'
+                  description: 'List of key features or outputs'
                 }
               ],
               preview: {
