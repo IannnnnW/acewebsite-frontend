@@ -29,7 +29,7 @@ export default function HeroSection() {
           
           <div className="mt-10 flex items-center justify-center gap-x-6 animate-slide-up">
             <Link
-              href="/programs"
+              href="/training-programs"
               className="rounded-md bg-white px-6 py-3 text-base font-semibold text-red-900 shadow-sm hover:bg-red-50 transition-all hover:scale-105"
             >
               Explore Programs

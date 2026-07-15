@@ -14,7 +14,7 @@ const navigation = [
       { name: 'Who Are We', href: '/about/who-we-are' },
       { name: 'Our Journey', href: '/about/our-journey' },
       { name: 'Thematic Areas', href: '/about/thematic-areas' },
-      { name: 'Programs', href: '/programs' },
+      { name: 'Training', href: '/training-programs' },
       { name: 'Facilities', href: '/facilities' },
     ],
   },

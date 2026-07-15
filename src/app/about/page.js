@@ -247,7 +247,7 @@ export default async function AboutPage() {
               Explore opportunities to study, research, or collaborate with ACE Uganda
             </p>
             <div className="mt-8 flex gap-4 justify-center flex-wrap">
-              <Link href="/programs" className="rounded-md bg-red-700 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-red-800 transition-colors">
+              <Link href="/training-programs" className="rounded-md bg-red-700 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-red-800 transition-colors">
                 View Programs
               </Link>
               <Link href="/research" className="rounded-md border border-red-700 px-6 py-3 text-base font-semibold text-red-700 shadow-sm hover:bg-red-50 transition-colors">

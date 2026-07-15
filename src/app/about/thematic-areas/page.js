@@ -523,11 +523,14 @@ export default async function ThematicAreasPage() {
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {services.map((service, i) => (
               <AnimateOnScroll key={service.title} variant="fade-up" delay={i * 80} className="h-full">
-                <div className="flex flex-col h-full rounded-2xl border border-gray-100 p-7 shadow-sm hover:shadow-md hover:border-red-200 transition-all">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-red-50 text-red-700 mb-5 shrink-0">
+                <Link
+                  href={`/research?area=${encodeURIComponent(service.title)}`}
+                  className="group flex flex-col h-full rounded-2xl border border-gray-100 p-7 shadow-sm hover:shadow-md hover:border-red-200 transition-all"
+                >
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-red-50 text-red-700 mb-5 shrink-0 group-hover:bg-red-100 transition-colors">
                     {iconMap[service.icon] || iconMap['beaker']}
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">{service.title}</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-red-700 transition-colors">{service.title}</h3>
                   <p className="text-sm text-gray-600 leading-relaxed flex-1">{service.description}</p>
                   {service.features && service.features.length > 0 && (
                     <ul className="mt-5 space-y-2">
@@ -541,7 +544,13 @@ export default async function ThematicAreasPage() {
                       ))}
                     </ul>
                   )}
-                </div>
+                  <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-red-700 group-hover:text-red-600">
+                    View related projects
+                    <svg className="h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </span>
+                </Link>
               </AnimateOnScroll>
             ))}
           </div>

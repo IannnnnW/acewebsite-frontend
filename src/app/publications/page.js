@@ -5,17 +5,15 @@ import { allPublicationsQuery } from '@/lib/queries'
 
 const THEMATIC_AREAS = [
   { value: 'all', label: 'All Areas' },
-  { value: 'amr', label: 'AMR' },
-  { value: 'human_genomics', label: 'Human Genomics' },
-  { value: 'malaria', label: 'Malaria' },
+  { value: 'amr', label: 'One Health, Pathogen Intelligence and AMR' },
+  { value: 'human_genomics', label: 'Human Genomics & Cancer' },
+  { value: 'malaria', label: 'Malaria Computational Biology' },
   { value: 'hpc', label: 'High Performance Computing' },
-  { value: 'mathematical_modelling', label: 'Mathematical Modelling' },
-  { value: 'capacity_building_and_training', label: 'Capacity Building & Training' },
-  { value: 'machine_learning', label: 'AI & Machine Learning' },
-  { value: 'databases_and_pipelines', label: 'Databases & Pipelines' },
-  { value: 'reviews_and_perspectives', label: 'Reviews and Perspectives' },
-  { value: 'visualization', label: 'Visualization' },
-  { value: 'other_bioinformatics', label: 'Other Bioinformatics' },
+  { value: 'pandemic_preparedness', label: 'Pandemic Preparedness' },
+  { value: 'capacity_building_and_training', label: 'Training and Capacity Strengthening' },
+  { value: 'machine_learning', label: 'Responsible AI and Digital Health Innovation' },
+  { value: 'visualization', label: 'Enhanced Visualization' },
+  { value: 'sustainable_digital_data_infrastructure', label: 'Sustainable Digital Data Infrastructure' },
 ]
 
 const ITEMS_PER_PAGE = 10

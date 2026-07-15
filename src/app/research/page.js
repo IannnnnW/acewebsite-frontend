@@ -1,5 +1,6 @@
 'use client'
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { client } from '@/lib/sanity'
 import { allProjectsQuery, allPartnersQuery, allFundersQuery } from '@/lib/queries'
 import { urlFor } from '@/lib/sanity'
@@ -11,31 +12,62 @@ import ACEPattern from '@/Components/shared/ACEPattern'
 
 const THEMATIC_AREAS = [
   { value: 'all', label: 'All Areas' },
-  { value: 'amr', label: 'AMR' },
-  { value: 'human_genomics_and_cancer', label: 'Human Genomics & Cancer' },
-  { value: 'malaria', label: 'Malaria' },
+  { value: 'amr', label: 'One Health, Pathogen Intelligence and AMR' },
+  { value: 'human_genomics', label: 'Human Genomics & Cancer' },
+  { value: 'malaria', label: 'Malaria Computational Biology' },
   { value: 'hpc', label: 'High Performance Computing' },
-  { value: 'capacity_building_and_training', label: 'Capacity Building & Training' },
-  { value: 'machine_learning', label: 'AI & Machine Learning' },
-  { value: 'visualization', label: 'Visualization' },
+  { value: 'pandemic_preparedness', label: 'Pandemic Preparedness' },
+  { value: 'capacity_building_and_training', label: 'Training and Capacity Strengthening' },
+  { value: 'machine_learning', label: 'Responsible AI and Digital Health Innovation' },
+  { value: 'visualization', label: 'Enhanced Visualization' },
+  { value: 'sustainable_digital_data_infrastructure', label: 'Sustainable Digital Data Infrastructure' },
 ]
 
 const AREA_COLORS = {
   amr: 'bg-orange-50 text-orange-700 ring-orange-200',
-  human_genomics_and_cancer: 'bg-blue-50 text-blue-700 ring-blue-200',
+  human_genomics: 'bg-blue-50 text-blue-700 ring-blue-200',
   malaria: 'bg-emerald-50 text-emerald-700 ring-emerald-200',
   hpc: 'bg-cyan-50 text-cyan-700 ring-cyan-200',
+  pandemic_preparedness: 'bg-rose-50 text-rose-700 ring-rose-200',
   capacity_building_and_training: 'bg-teal-50 text-teal-700 ring-teal-200',
-  ai_and_machine_learning: 'bg-violet-50 text-violet-700 ring-violet-200',
+  machine_learning: 'bg-indigo-50 text-indigo-700 ring-indigo-200',
   visualization: 'bg-pink-50 text-pink-700 ring-pink-200',
+  sustainable_digital_data_infrastructure: 'bg-amber-50 text-amber-700 ring-amber-200',
 }
 
-export default function ResearchPage() {
+// Resolve an incoming ?area= param — which may be a canonical value (e.g. "amr")
+// or a human title passed from the About page (e.g. "Human Genomics & Cancer") —
+// to a canonical thematic-area value. Text matching keeps the About cards working
+// even though thematic areas aren't their own documents in the backend.
+function resolveAreaParam(raw) {
+  if (!raw) return 'all'
+  const norm = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim()
+  const target = norm(raw)
+  const byValue = THEMATIC_AREAS.find((a) => a.value === raw)
+  if (byValue) return byValue.value
+  const byLabel = THEMATIC_AREAS.find((a) => norm(a.label) === target)
+  if (byLabel) return byLabel.value
+  // Loose contains match (either direction) as a final fallback
+  const byPartial = THEMATIC_AREAS.find(
+    (a) => a.value !== 'all' && (norm(a.label).includes(target) || target.includes(norm(a.label)))
+  )
+  return byPartial ? byPartial.value : 'all'
+}
+
+function ResearchPageInner() {
+  const searchParams = useSearchParams()
   const [projects, setProjects] = useState([])
   const [loading, setLoading] = useState(true)
   const [activeArea, setActiveArea] = useState('all')
   const [partners, setPartners] = useState([])
   const [funders, setFunders] = useState([])
+
+  // Apply a thematic-area filter passed in the URL (?area=…) — e.g. from the
+  // clickable cards on the About → Thematic Areas page. Accepts a value or a title.
+  useEffect(() => {
+    const areaParam = searchParams.get('area')
+    if (areaParam) setActiveArea(resolveAreaParam(areaParam))
+  }, [searchParams])
 
   useEffect(() => {
     async function getProjects() {
@@ -305,6 +337,14 @@ export default function ResearchPage() {
         </div>
       </AnimateOnScroll>
     </div>
+  )
+}
+
+export default function ResearchPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-white" />}>
+      <ResearchPageInner />
+    </Suspense>
   )
 }
 

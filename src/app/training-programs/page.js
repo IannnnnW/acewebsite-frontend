@@ -11,8 +11,8 @@ export default async function ProgramsPage() {
   const programs = await getPrograms()
 
   const TYPE_INFO = {
-    msc:   { badge: 'MSc Program',      icon: 'graduation' },
-    phd:   { badge: 'Doctoral Program', icon: 'badge'      },
+    msc:   { badge: 'MSc Training',      icon: 'graduation' },
+    phd:   { badge: 'Doctoral Training', icon: 'badge'      },
     short: { badge: 'Short Course',     icon: 'book'       },
   }
 
@@ -23,7 +23,7 @@ export default async function ProgramsPage() {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
-              Academic Programs
+              Academic Training
             </h1>
             <p className="mt-6 text-lg leading-8 text-red-100">
               Build your career in bioinformatics and data science with world-class 
@@ -90,7 +90,7 @@ export default async function ProgramsPage() {
                       </div>
                     )}
                     <Link
-                      href={`/programs/${program.slug?.current}`}
+                      href={`/training-programs/${program.slug?.current}`}
                       className="self-start inline-flex items-center gap-2 rounded-lg bg-red-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-red-600 transition-colors"
                     >
                       Learn More

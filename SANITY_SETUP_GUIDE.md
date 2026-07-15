@@ -367,7 +367,7 @@ export default async function HomePage() {
 **Example: Programs Page**
 
 ```javascript
-// src/app/programs/page.js
+// src/app/training-programs/page.js
 import { client } from '@/lib/sanity'
 import { fetchWithFallback } from '@/lib/fallback'
 
@@ -390,7 +390,7 @@ export default async function ProgramsPage() {
 **Example: Dynamic Program Page**
 
 ```javascript
-// src/app/programs/[slug]/page.js
+// src/app/training-programs/[slug]/page.js
 import { client } from '@/lib/sanity'
 import { getFallbackItemBySlug } from '@/lib/fallback'
 

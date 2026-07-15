@@ -382,7 +382,7 @@ export default async function EventsPage() {
                 Get in Touch
               </Link>
               <Link
-                href="/programs"
+                href="/training-programs"
                 className="rounded-md bg-white/10 backdrop-blur-sm border-2 border-white px-6 py-3 text-base font-semibold text-white hover:bg-white/20 transition-all"
               >
                 View Programs

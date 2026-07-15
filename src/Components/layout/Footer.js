@@ -15,9 +15,9 @@ const footerNavigation = {
     { name: 'Publications', href: '/publications' },
   ],
   academic: [
-    { name: 'MSc Programs', href: '/programs' },
-    { name: 'PhD Programs', href: '/programs' },
-    { name: 'Short Courses', href: '/programs' },
+    { name: 'MSc Programs', href: '/training-programs' },
+    { name: 'PhD Programs', href: '/training-programs' },
+    { name: 'Short Courses', href: '/training-programs' },
   ],
   facilities: [
     { name: 'HPC Cluster', href: '/hpc' },

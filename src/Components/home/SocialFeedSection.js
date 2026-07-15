@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Tweet } from 'react-tweet'
+import SafeTweet from '@/Components/shared/SafeTweet'
 import AnimateOnScroll from '@/Components/shared/AnimateOnScroll'
 
 export function tweetIdFromUrl(url) {
@@ -87,14 +87,14 @@ export default function SocialFeedSection({ socialPosts, blogPosts }) {
               </div>
               <div className="space-y-4 [&_.react-tweet-theme]:!my-0 [&_.react-tweet-theme]:!max-w-none">
                 {socialPosts.map((post) => {
-                  const tweetId = post.platform === 'twitter' ? tweetIdFromUrl(post.url) : null
-                  return tweetId ? (
-                    <div className="my-4">
-                      <Tweet key={post._id} id={tweetId} />
+                  const isTweet = post.platform === 'twitter' && tweetIdFromUrl(post.url)
+                  return isTweet ? (
+                    <div key={post._id} className="my-4">
+                      <SafeTweet url={post.url} />
                     </div>
                   ) : (
-                    <div className="my-4">
-                      <ExternalPostCard key={post._id} post={post} />
+                    <div key={post._id} className="my-4">
+                      <ExternalPostCard post={post} />
                     </div>
                   )
                 })}

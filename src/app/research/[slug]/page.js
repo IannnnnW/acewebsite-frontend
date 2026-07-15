@@ -8,17 +8,15 @@ import AnimateOnScroll from '@/Components/shared/AnimateOnScroll'
 import ACEPattern from '@/Components/shared/ACEPattern'
 
 const THEMATIC_AREA_LABELS = {
-  amr: 'AMR',
-  human_genomics: 'Human Genomics',
-  malaria: 'Malaria',
+  amr: 'One Health, Pathogen Intelligence and AMR',
+  human_genomics: 'Human Genomics & Cancer',
+  malaria: 'Malaria Computational Biology',
   hpc: 'High Performance Computing',
-  mathematical_modelling: 'Mathematical Modelling',
-  capacity_building_and_training: 'Capacity Building & Training',
-  machine_learning: 'Machine Learning',
-  databases_and_pipelines: 'Databases & Pipelines',
-  reviews_and_perspectives: 'Reviews and Perspectives',
-  visualization: 'Visualization',
-  other_bioinformatics: 'Other Bioinformatics',
+  pandemic_preparedness: 'Pandemic Preparedness',
+  capacity_building_and_training: 'Training and Capacity Strengthening',
+  machine_learning: 'Responsible AI and Digital Health Innovation',
+  visualization: 'Enhanced Visualization',
+  sustainable_digital_data_infrastructure: 'Sustainable Digital Data Infrastructure',
 }
 
 function PersonLink({ person }) {
