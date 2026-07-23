@@ -94,6 +94,15 @@ export const heroSlide = defineType({
       hidden: ({ parent }) => parent?.mediaType !== 'video',
     }),
     defineField({
+      name: 'stickerImage',
+      title: 'Sticker / Badge',
+      type: 'image',
+      description: 'Optional logo or badge overlaid on this slide\'s image (e.g. a partner or event logo — "Google I/O" on a slide announcing that feature). Leave empty for no sticker. Recommended: transparent PNG, roughly 300x150px.',
+      fields: [
+        { name: 'alt', title: 'Alt Text', type: 'string' },
+      ],
+    }),
+    defineField({
       name: 'ctaText',
       title: 'CTA Button Text',
       type: 'string',

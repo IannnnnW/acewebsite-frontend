@@ -87,12 +87,29 @@ export const homePage = defineType({
                   title: 'Icon Name',
                   type: 'string',
                   description: 'e.g., beaker, cpu-chip, academic-cap, chart-bar'
+                },
+                {
+                  name: 'image',
+                  title: 'Card Image',
+                  type: 'image',
+                  description: 'Shown at the top of the card on the homepage. Recommended: landscape photo, at least 800px wide.',
+                  options: { hotspot: true },
+                  fields: [
+                    { name: 'alt', title: 'Alt Text', type: 'string' }
+                  ]
+                },
+                {
+                  name: 'link',
+                  title: 'Link',
+                  type: 'string',
+                  description: 'Optional — where this card links to on the site (e.g., /vr-lab, /hpc, /research). Leave empty for a non-clickable card.'
                 }
               ],
               preview: {
                 select: {
                   title: 'title',
-                  subtitle: 'description'
+                  subtitle: 'description',
+                  media: 'image'
                 }
               }
             }
@@ -144,12 +161,29 @@ export const homePage = defineType({
                   title: 'Icon Name',
                   type: 'string',
                   description: 'e.g., beaker, cpu-chip, academic-cap, chart-bar'
+                },
+                {
+                  name: 'image',
+                  title: 'Card Image',
+                  type: 'image',
+                  description: 'Shown as the card background on the homepage. Recommended: landscape or portrait photo, at least 800px wide.',
+                  options: { hotspot: true },
+                  fields: [
+                    { name: 'alt', title: 'Alt Text', type: 'string' }
+                  ]
+                },
+                {
+                  name: 'link',
+                  title: 'Link',
+                  type: 'string',
+                  description: 'Optional — where this card links to on the site (e.g., /research, /research?area=Genomics). Leave empty for a non-clickable card.'
                 }
               ],
               preview: {
                 select: {
                   title: 'title',
-                  subtitle: 'description'
+                  subtitle: 'description',
+                  media: 'image'
                 }
               }
             }

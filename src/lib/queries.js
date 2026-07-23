@@ -45,6 +45,7 @@ export const heroSlidesQuery = `
     category,
     mediaType,
     image,
+    stickerImage,
     "videoUrl": video.asset->url,
     "posterImage": posterImage{ ..., "url": asset->url },
     ctaText,

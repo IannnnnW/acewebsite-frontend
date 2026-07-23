@@ -1,4 +1,4 @@
-import PartnerCarousel from "../about/PartnerCarousel"
+import PartnersMarquee from "./PartnersMarquee"
 import { client } from '@/lib/sanity'
 import { fetchWithFallback } from '@/lib/fallback'
 import AnimateOnScroll from '@/Components/shared/AnimateOnScroll'
@@ -48,7 +48,7 @@ export default async function PartnershipsSection() {
             {homeData.partnershipSection.description}
           </p>
         </AnimateOnScroll>
-        <PartnerCarousel/>
+        <PartnersMarquee/>
         <AnimateOnScroll variant="fade-up" delay={100} className="mx-auto mt-16 max-w-5xl">
           <div className="relative isolate overflow-hidden bg-gradient-to-br from-red-50 to-gray-50 px-6 py-20 sm:rounded-3xl sm:px-10 sm:py-24 lg:py-24 xl:px-24">
             <div className="mx-auto grid max-w-6xl grid-cols-1 gap-x-12 gap-y-16 lg:grid-cols-5 lg:items-center">              

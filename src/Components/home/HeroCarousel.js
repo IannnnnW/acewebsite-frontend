@@ -183,14 +183,29 @@ export default function HeroCarousel({ slides, tagline, institutionLine }) {
                   sizes="(min-width: 1024px) 54vw, 100vw"
                 />
               ) : null}
+
+              {/* Optional sticker/badge (e.g. a partner or event logo) for this slide */}
+              {slide.stickerImage && (
+                <div className="absolute top-5 right-5 sm:top-6 sm:right-6 z-10 rounded-xl bg-white/95 shadow-lg ring-1 ring-black/5 p-3">
+                  <div className="relative h-10 w-24 sm:h-12 sm:w-32">
+                    <Image
+                      src={urlFor(slide.stickerImage).width(300).url()}
+                      alt={slide.stickerImage?.alt || `${slide.title} badge`}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           ))}
 
           {/* Subtle vignette for photographic depth — not for text legibility */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent pointer-events-none" />
 
-          {/* Brand accent — thin red edge where the two panels meet */}
-          <div className="hidden lg:block absolute inset-y-0 left-0 w-1.5 bg-red-700" />
+          {/* Seam — a soft white dissolve from the text panel into the photo,
+              instead of a hard-edged accent bar */}
+          <div className="hidden lg:block absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white via-white/50 to-transparent pointer-events-none" />
         </div>
 
       </div>
