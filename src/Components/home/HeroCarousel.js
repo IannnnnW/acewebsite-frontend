@@ -3,7 +3,6 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { urlFor } from '@/lib/sanity'
-import ACEPattern from '@/Components/shared/ACEPattern'
 
 const SLIDE_DURATION = 7000
 
@@ -46,169 +45,157 @@ export default function HeroCarousel({ slides, tagline, institutionLine }) {
   const activeSlide = slides[activeIndex]
 
   return (
-    <section className="relative w-full bg-white overflow-hidden">
-      <div className="mx-auto max-w-[1600px] flex flex-col lg:flex-row">
+    <section
+      className="relative w-full overflow-hidden bg-gray-900"
+      style={{ height: 'calc(100svh - 80px)', minHeight: '520px' }}
+    >
 
-        {/*
-         * ── LEFT — TEXT PANEL ───────────────────────────────────────────
-         * Tagline + institution label are permanent. Only the description
-         * and CTA rotate with the image on the right.
-         */}
-        <div className="relative z-10 flex flex-col justify-center px-6 sm:px-12 lg:px-16 xl:px-20 py-16 lg:py-20 lg:w-[46%] shrink-0 bg-white">
+      {/*
+       * ── BACKGROUND — full-bleed image/video crossfade ──────────────────
+       * The photo/video fills the entire hero; text sits on top of it.
+       */}
+      {slides.map((slide, i) => (
+        <div
+          key={slide._id}
+          className="absolute inset-0 transition-opacity duration-[1200ms]"
+          style={{ opacity: i === activeIndex ? 1 : 0 }}
+          aria-hidden={i !== activeIndex}
+        >
+          {slide.videoUrl && slide.mediaType === 'video' ? (
+            <video
+              autoPlay={i === activeIndex}
+              muted
+              loop
+              playsInline
+              poster={slide.posterImage?.url}
+              className="absolute inset-0 h-full w-full object-cover"
+            >
+              <source src={slide.videoUrl} type="video/mp4" />
+            </video>
+          ) : slide.image ? (
+            <Image
+              src={urlFor(slide.image).width(2000).height(1500).quality(85).url()}
+              alt={slide.description || ''}
+              fill
+              priority={i === 0}
+              className="object-cover"
+              sizes="100vw"
+            />
+          ) : null}
 
-          <ACEPattern
-            rows={5}
-            cols={7}
-            opacity={0.06}
-            className="hidden lg:block absolute top-10 right-10 pointer-events-none"
-          />
-
-          <p className="text-xs font-bold uppercase tracking-[0.22em] text-red-700 mb-5">
-            {institutionLine || 'African Center of Excellence in Bioinformatics & Data Intensive Sciences'}
-          </p>
-
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.25rem] font-extrabold text-gray-900 leading-[1.12] tracking-tight max-w-xl">
-            {tagline || 'Advancing Health through Innovation'}
-          </h1>
-
-          <div className="mt-6 mb-6 flex items-center gap-2" aria-hidden="true">
-            <div className="h-[3px] w-10 bg-red-700 rounded-full" />
-            <div className="h-[3px] w-3 bg-red-200 rounded-full" />
-          </div>
-
-          {/* Rotating per-slide description + CTA */}
-          <div
-            key={activeSlide._id}
-            className="transition-all duration-500"
-            style={{
-              opacity: slideContentVisible ? 1 : 0,
-              transform: slideContentVisible ? 'translateY(0)' : 'translateY(8px)',
-            }}
-          >
-            {activeSlide.description && (
-              <p className="text-base lg:text-lg text-gray-600 leading-relaxed max-w-md mb-8">
-                {activeSlide.description}
-              </p>
-            )}
-
-            {activeSlide.ctaText && activeSlide.ctaLink && (
-              <Link
-                href={activeSlide.ctaLink}
-                className="inline-flex items-center gap-2 rounded-md bg-red-700 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-red-800 hover:shadow-md"
-              >
-                {activeSlide.ctaText}
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-            )}
-          </div>
-
-          {/* Navigation — dots + arrows, understated and professional */}
-          {slides.length > 1 && (
-            <div className="mt-12 flex items-center gap-6">
-              <div className="flex items-center gap-2" role="tablist" aria-label="Hero slides">
-                {slides.map((_, i) => (
-                  <button
-                    key={i}
-                    role="tab"
-                    aria-selected={i === activeIndex}
-                    aria-label={`Slide ${i + 1}`}
-                    onClick={() => goToSlide(i)}
-                    className="rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-700"
-                    style={{
-                      height: '6px',
-                      width: i === activeIndex ? '28px' : '6px',
-                      backgroundColor: i === activeIndex ? '#a71c20' : '#e5e7eb',
-                    }}
-                  />
-                ))}
-              </div>
-
-              <div className="flex items-center gap-2 ml-auto">
-                <button
-                  onClick={prevSlide}
-                  aria-label="Previous slide"
-                  className="rounded-full border border-gray-300 p-2 text-gray-500 transition-colors hover:border-red-700 hover:text-red-700"
-                >
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                </button>
-                <button
-                  onClick={nextSlide}
-                  aria-label="Next slide"
-                  className="rounded-full border border-gray-300 p-2 text-gray-500 transition-colors hover:border-red-700 hover:text-red-700"
-                >
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
+          {/* Optional sticker/badge (e.g. a partner or event logo) for this slide */}
+          {slide.stickerImage && (
+            <div className="absolute top-5 right-5 sm:top-6 sm:right-6 z-10 rounded-xl bg-white/95 shadow-lg ring-1 ring-black/5 p-3">
+              <div className="relative h-10 w-24 sm:h-12 sm:w-32">
+                <Image
+                  src={urlFor(slide.stickerImage).width(300).url()}
+                  alt={slide.stickerImage?.alt || `${slide.title} badge`}
+                  fill
+                  className="object-contain"
+                />
               </div>
             </div>
           )}
         </div>
+      ))}
 
-        {/*
-         * ── RIGHT — IMAGE PANEL ─────────────────────────────────────────
-         * Completely free of overlaid text. Images/video crossfade;
-         * a thin red accent bar ties it back to the brand.
-         */}
-        <div className="relative h-[320px] sm:h-[420px] lg:h-auto lg:flex-1 overflow-hidden bg-gray-100">
-          {slides.map((slide, i) => (
-            <div
-              key={slide._id}
-              className="absolute inset-0 transition-opacity duration-[1200ms]"
-              style={{ opacity: i === activeIndex ? 1 : 0 }}
-              aria-hidden={i !== activeIndex}
-            >
-              {slide.videoUrl && slide.mediaType === 'video' ? (
-                <video
-                  autoPlay={i === activeIndex}
-                  muted
-                  loop
-                  playsInline
-                  poster={slide.posterImage?.url}
-                  className="absolute inset-0 h-full w-full object-cover"
-                >
-                  <source src={slide.videoUrl} type="video/mp4" />
-                </video>
-              ) : slide.image ? (
-                <Image
-                  src={urlFor(slide.image).width(1600).height(1300).quality(85).url()}
-                  alt={slide.description || ''}
-                  fill
-                  priority={i === 0}
-                  className="object-cover"
-                  sizes="(min-width: 1024px) 54vw, 100vw"
-                />
-              ) : null}
+      {/* Scrim — strongest where the text sits (left), fading out to the right */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/45 to-black/10 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10 pointer-events-none" />
 
-              {/* Optional sticker/badge (e.g. a partner or event logo) for this slide */}
-              {slide.stickerImage && (
-                <div className="absolute top-5 right-5 sm:top-6 sm:right-6 z-10 rounded-xl bg-white/95 shadow-lg ring-1 ring-black/5 p-3">
-                  <div className="relative h-10 w-24 sm:h-12 sm:w-32">
-                    <Image
-                      src={urlFor(slide.stickerImage).width(300).url()}
-                      alt={slide.stickerImage?.alt || `${slide.title} badge`}
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
+      {/*
+       * ── TEXT OVERLAY ─────────────────────────────────────────────────
+       * Same left-aligned position and content as before — sized up for
+       * the full-bleed canvas, with room reserved at the bottom for the
+       * navigation cluster below.
+       */}
+      <div className="relative z-10 flex h-full flex-col justify-center px-6 sm:px-12 lg:px-20 xl:px-24 pb-24 sm:pb-20 max-w-3xl">
 
-          {/* Subtle vignette for photographic depth — not for text legibility */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent pointer-events-none" />
+        <p className="text-xs sm:text-sm font-bold uppercase tracking-[0.24em] text-red-400 mb-6">
+          {institutionLine || 'African Center of Excellence in Bioinformatics & Data Intensive Sciences'}
+        </p>
 
-          {/* Seam — a soft white dissolve from the text panel into the photo,
-              instead of a hard-edged accent bar */}
-          <div className="hidden lg:block absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white via-white/50 to-transparent pointer-events-none" />
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-white leading-[1.08] tracking-tight drop-shadow-sm">
+          {tagline || 'Advancing Health through Innovation'}
+        </h1>
+
+        <div className="mt-8 mb-8 flex items-center gap-2" aria-hidden="true">
+          <div className="h-[3px] w-12 bg-red-600 rounded-full" />
+          <div className="h-[3px] w-4 bg-red-400/50 rounded-full" />
         </div>
 
+        {/* Rotating per-slide description + CTA */}
+        <div
+          key={activeSlide._id}
+          className="transition-all duration-500"
+          style={{
+            opacity: slideContentVisible ? 1 : 0,
+            transform: slideContentVisible ? 'translateY(0)' : 'translateY(8px)',
+          }}
+        >
+          {activeSlide.description && (
+            <p className="text-lg lg:text-xl text-gray-200 leading-relaxed max-w-lg mb-10">
+              {activeSlide.description}
+            </p>
+          )}
+
+          {activeSlide.ctaText && activeSlide.ctaLink && (
+            <Link
+              href={activeSlide.ctaLink}
+              className="inline-flex items-center gap-2 rounded-md bg-red-700 px-7 py-3.5 text-base font-semibold text-white shadow-sm transition-all hover:bg-red-800 hover:shadow-md"
+            >
+              {activeSlide.ctaText}
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          )}
+        </div>
       </div>
+
+      {/* ── NAVIGATION — bottom-center, independent of the text column ── */}
+      {slides.length > 1 && (
+        <div className="absolute inset-x-0 bottom-8 sm:bottom-10 z-10 flex items-center justify-center gap-5 sm:gap-6 px-6">
+          <button
+            onClick={prevSlide}
+            aria-label="Previous slide"
+            className="rounded-full border border-white/30 bg-black/20 backdrop-blur-sm p-2.5 text-white/80 transition-colors hover:border-red-500 hover:text-red-400"
+          >
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          <div className="flex items-center gap-2" role="tablist" aria-label="Hero slides">
+            {slides.map((_, i) => (
+              <button
+                key={i}
+                role="tab"
+                aria-selected={i === activeIndex}
+                aria-label={`Slide ${i + 1}`}
+                onClick={() => goToSlide(i)}
+                className="rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
+                style={{
+                  height: '6px',
+                  width: i === activeIndex ? '28px' : '6px',
+                  backgroundColor: i === activeIndex ? '#dc2626' : 'rgba(255,255,255,0.35)',
+                }}
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={nextSlide}
+            aria-label="Next slide"
+            className="rounded-full border border-white/30 bg-black/20 backdrop-blur-sm p-2.5 text-white/80 transition-colors hover:border-red-500 hover:text-red-400"
+          >
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+      )}
+
     </section>
   )
 }
