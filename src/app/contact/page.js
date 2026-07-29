@@ -58,7 +58,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="text-base font-semibold text-gray-900">Email</h3>
-                  <p className="mt-1 text-base text-gray-600">ace.ac.ug@gmail.com</p>
+                  <p className="mt-1 text-base text-gray-600">aceuganda@idi.co.ug</p>
                 </div>
               </div>
 
@@ -100,7 +100,6 @@ export default function ContactPage() {
                   <h3 className="text-base font-semibold text-gray-900">Office Hours</h3>
                   <p className="mt-1 text-base text-gray-600">
                     Monday - Friday: 8:00 AM - 5:00 PM<br />
-                    Saturday: 9:00 AM - 1:00 PM
                   </p>
                 </div>
               </div>
