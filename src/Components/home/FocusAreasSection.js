@@ -16,7 +16,7 @@ export default async function FocusAreasSection() {
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <AnimateOnScroll variant="fade-up" className="mx-auto max-w-2xl lg:text-center">
-          <h2 className="text-base font-semibold leading-7 text-red-900">Key Research Areas</h2>
+          <h2 className="text-base font-semibold leading-7 text-red-900">Thematic Areas</h2>
           <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
             {homeData.focusAreasSection.sectionTitle}
           </p>

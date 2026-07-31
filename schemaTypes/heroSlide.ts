@@ -49,13 +49,11 @@ export const heroSlide = defineType({
         list: [
           { title: 'Image', value: 'image' },
           { title: 'Video', value: 'video' },
-          { title: 'GitHub', value: 'github' },
         ],
         layout: 'radio',
       },
       initialValue: 'image',
       validation: (Rule) => Rule.required(),
-      description: 'GitHub renders a branded panel linking out via the CTA button below — no image/video needed for that option.',
     }),
     defineField({
       name: 'image',
@@ -99,7 +97,7 @@ export const heroSlide = defineType({
       name: 'stickerImage',
       title: 'Sticker / Badge',
       type: 'image',
-      description: 'Optional logo or badge overlaid on this slide\'s image (e.g. a partner or event logo — "Google I/O" on a slide announcing that feature). Leave empty for no sticker. Recommended: transparent PNG, roughly 300x150px.',
+      description: 'Optional logo or badge overlaid on this slide\'s image or video (e.g. the GitHub logo on a slide showcasing ACE\'s open-source work, or a partner/event logo like "Google I/O"). Leave empty for no sticker. Recommended: transparent PNG, roughly 300x150px.',
       fields: [
         { name: 'alt', title: 'Alt Text', type: 'string' },
       ],
