@@ -49,11 +49,13 @@ export const heroSlide = defineType({
         list: [
           { title: 'Image', value: 'image' },
           { title: 'Video', value: 'video' },
+          { title: 'GitHub', value: 'github' },
         ],
         layout: 'radio',
       },
       initialValue: 'image',
       validation: (Rule) => Rule.required(),
+      description: 'GitHub renders a branded panel linking out via the CTA button below — no image/video needed for that option.',
     }),
     defineField({
       name: 'image',

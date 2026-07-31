@@ -83,7 +83,7 @@ export const personBySlugQuery = `
     name,
     slug,
     role,
-    department,
+    staffCategory,
     bio,
     researchInterests,
     image,
@@ -143,6 +143,13 @@ export const allProjectsQuery = `
     status
   }
 `
+
+// Reuses the same thematic-area descriptions already authored on the About
+// page (Thematic Areas section) so the Research page can show one above the
+// filtered project grid without duplicating that content in a new schema.
+export const aboutThematicAreasQuery = `*[_type == "aboutPage"][0]{
+  "areas": thematicAreasSection.thematicAreas[]{title, description}
+}`
 
 export const projectBySlugQuery = `
   *[_type == "project" && slug.current == $slug][0] {

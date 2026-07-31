@@ -84,7 +84,9 @@ export default function ContactPage() {
                 <div>
                   <h3 className="text-base font-semibold text-gray-900">Location</h3>
                   <p className="mt-1 text-base text-gray-600">
-                    Makerere University<br />
+                    Infectious Diseases Institute (IDI)<br />
+                    Makerere University College of Health Sciences<br />
+                    P.O. Box 22418<br />
                     Kampala, Uganda
                   </p>
                 </div>
@@ -227,85 +229,18 @@ export default function ContactPage() {
       {/* Map Section */}
       <div className="border-t border-gray-100 bg-gray-50">
         <div className="mx-auto max-w-7xl px-6 lg:px-8 py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            {/* Location Details */}
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-8">Find Us</h2>
-              <div className="space-y-6">
-                <div className="flex gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-red-700 text-white shrink-0">
-                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-base font-semibold text-gray-900">Building</h3>
-                    <p className="mt-1 text-base text-gray-600">
-                      IDI-McKinnell Knowledge Centre<br />
-                      (Main Office)
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-red-700 text-white shrink-0">
-                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-base font-semibold text-gray-900">Address</h3>
-                    <p className="mt-1 text-base text-gray-600">
-                      Infectious Diseases Institute (IDI)<br />
-                      Makerere University College of Health Sciences<br />
-                      P.O. Box 22418<br />
-                      Kampala, Uganda
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-red-700 text-white shrink-0">
-                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-base font-semibold text-gray-900">Getting Here</h3>
-                    <p className="mt-1 text-base text-gray-600">
-                      Located on the Makerere University main campus, just off the main gate on University Road. The IDI-McKinnell Knowledge Centre is signposted from the main entrance.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-red-700 text-white shrink-0">
-                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-base font-semibold text-gray-900">Phone</h3>
-                    <p className="mt-1 text-base text-gray-600">+256 312 211 422</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Google Maps Embed */}
-            <div className="rounded-2xl overflow-hidden shadow-lg border border-gray-200 aspect-[4/3]">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63835.797136308174!2d32.48207597998175!3d0.36509215561452574!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x177dbb0d8805887f%3A0xcf08b4c66bdecd2f!2sIDI-McKinnell%20Knowledge%20Centre%20(Main%20Office)!5e0!3m2!1sen!2sug!4v1779079036583!5m2!1sen!2sug"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="ACE Uganda Office Location"
-              />
-            </div>
+          {/* Google Maps Embed — full width */}
+          <div className="rounded-2xl overflow-hidden shadow-lg border border-gray-200 aspect-[21/9]">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63835.797136308174!2d32.48207597998175!3d0.36509215561452574!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x177dbb0d8805887f%3A0xcf08b4c66bdecd2f!2sIDI-McKinnell%20Knowledge%20Centre%20(Main%20Office)!5e0!3m2!1sen!2sug!4v1779079036583!5m2!1sen!2sug"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="ACE Uganda Office Location"
+            />
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@
 import { useState, useEffect, useMemo, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { client } from '@/lib/sanity'
-import { allProjectsQuery, allPartnersQuery, allFundersQuery } from '@/lib/queries'
+import { allProjectsQuery, allPartnersQuery, allFundersQuery, aboutThematicAreasQuery } from '@/lib/queries'
 import { urlFor } from '@/lib/sanity'
 import { getFallbackData } from '@/lib/fallback'
 import Link from 'next/link'
@@ -39,9 +39,12 @@ const AREA_COLORS = {
 // or a human title passed from the About page (e.g. "Human Genomics & Cancer") —
 // to a canonical thematic-area value. Text matching keeps the About cards working
 // even though thematic areas aren't their own documents in the backend.
+function norm(s) {
+  return s.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim()
+}
+
 function resolveAreaParam(raw) {
   if (!raw) return 'all'
-  const norm = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim()
   const target = norm(raw)
   const byValue = THEMATIC_AREAS.find((a) => a.value === raw)
   if (byValue) return byValue.value
@@ -61,6 +64,7 @@ function ResearchPageInner() {
   const [activeArea, setActiveArea] = useState('all')
   const [partners, setPartners] = useState([])
   const [funders, setFunders] = useState([])
+  const [areaDescriptions, setAreaDescriptions] = useState([])
 
   // Apply a thematic-area filter passed in the URL (?area=…) — e.g. from the
   // clickable cards on the About → Thematic Areas page. Accepts a value or a title.
@@ -91,9 +95,18 @@ function ResearchPageInner() {
         setFunders([])
       }
     }
+    async function getAreaDescriptions() {
+      try {
+        const data = await client.fetch(aboutThematicAreasQuery)
+        setAreaDescriptions(data?.areas || [])
+      } catch {
+        setAreaDescriptions([])
+      }
+    }
     getProjects()
     getPartners()
     getFunders()
+    getAreaDescriptions()
   }, [])
 
   const filtered = useMemo(() => {
@@ -102,6 +115,15 @@ function ResearchPageInner() {
   }, [projects, activeArea])
 
   const areaLabel = THEMATIC_AREAS.find((a) => a.value === activeArea)?.label
+
+  // Same content already authored on About → Thematic Areas — matched by
+  // normalized title so it works without a dedicated schema for this page.
+  const areaDescription = useMemo(() => {
+    if (activeArea === 'all' || !areaLabel) return null
+    const target = norm(areaLabel)
+    const match = areaDescriptions.find((a) => a.title && norm(a.title) === target)
+    return match?.description || null
+  }, [activeArea, areaLabel, areaDescriptions])
 
   return (
     <div className="bg-white">
@@ -161,6 +183,12 @@ function ResearchPageInner() {
               : `${filtered.length} project${filtered.length !== 1 ? 's' : ''} in ${areaLabel}`}
           </p>
         </AnimateOnScroll>
+
+        {areaDescription && (
+          <AnimateOnScroll variant="fade-up" className="mx-auto max-w-3xl mb-12 rounded-2xl bg-red-50 border border-red-100 p-6 sm:p-8">
+            <p className="text-base leading-7 text-gray-700 text-center">{areaDescription}</p>
+          </AnimateOnScroll>
+        )}
 
         {loading ? (
           <div className="flex justify-center py-24">

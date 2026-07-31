@@ -13,12 +13,10 @@ const navigation = [
     submenu: [
       { name: 'Who Are We', href: '/about/who-we-are' },
       { name: 'Our Journey', href: '/about/our-journey' },
-      { name: 'Thematic Areas', href: '/about/thematic-areas' },
-      { name: 'Training', href: '/training-programs' },
       { name: 'Facilities', href: '/facilities' },
     ],
   },
-  { name: 'Research', href: '/research' },
+  { name: 'Thematic Areas', href: '/research' },
   { name: 'Publications', href: '/publications' },
   { name: 'Events', href: '/events' },
   { name: 'Blog', href: '/blog' },

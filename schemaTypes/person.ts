@@ -45,12 +45,14 @@ export const personType = defineType({
       options: {
         list: [
           {title: 'Admin', value: 'admin'},
-          {title: 'Engineering', value: 'it'},
+          {title: 'HPC Engineering', value: 'it'},
+          {title: 'Software Development', value: 'software_development'},
           {title: 'Interns', value: 'interns'},
           {title: 'MSc Fellows', value: 'msc_fellows'},
           {title: 'PhD Fellows', value: 'phd_fellows'},
           {title: 'Bioinformatics Researchers', value: 'bioinformatics_researchers'},
           {title: 'AI', value: 'ai'},
+          {title: 'Alumni', value: 'alumni'},
         ],
         layout: 'radio',
       },

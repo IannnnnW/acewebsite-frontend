@@ -1,19 +1,10 @@
 import { client } from '@/lib/sanity'
 import { allStaffQuery, teamPageSettingsQuery } from '@/lib/queries'
 import { urlFor } from '@/lib/sanity'
+import { STAFF_CATEGORIES, getStaffCategoryLabel } from '@/lib/staffCategories'
 import Image from 'next/image'
 import Link from 'next/link'
 import AnimateOnScroll from '@/Components/shared/AnimateOnScroll'
-
-const CATEGORY_ORDER = [
-  { value: 'admin', label: 'Administration' },
-  { value: 'bioinformatics_researchers', label: 'Bioinformatics Researchers' },
-  { value: 'ai', label: 'AI Researchers' },
-  { value: 'phd_fellows', label: 'PhD Fellows' },
-  { value: 'msc_fellows', label: 'MSc Fellows' },
-  { value: 'it', label: 'Engineering' },
-  { value: 'interns', label: 'Interns' },
-]
 
 function groupStaffByCategory(staff) {
   const grouped = {}
@@ -23,11 +14,6 @@ function groupStaffByCategory(staff) {
     grouped[cat].push(person)
   })
   return grouped
-}
-
-function getCategoryLabel(value) {
-  const found = CATEGORY_ORDER.find((c) => c.value === value)
-  return found ? found.label : value.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())
 }
 
 function PersonCard({ person }) {
@@ -72,10 +58,10 @@ export default async function TeamPage() {
   const grouped = groupStaffByCategory(staff || [])
 
   const orderedCategories = [
-    ...CATEGORY_ORDER.filter((c) => grouped[c.value]),
+    ...STAFF_CATEGORIES.filter((c) => grouped[c.value]),
     ...Object.keys(grouped)
-      .filter((k) => !CATEGORY_ORDER.find((c) => c.value === k))
-      .map((k) => ({ value: k, label: getCategoryLabel(k) })),
+      .filter((k) => !STAFF_CATEGORIES.find((c) => c.value === k))
+      .map((k) => ({ value: k, label: getStaffCategoryLabel(k) })),
   ]
 
   return (

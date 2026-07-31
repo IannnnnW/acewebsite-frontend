@@ -291,12 +291,23 @@ export const aboutPage =  defineType({
                       {title: 'Innovation', value: 'innovation'}
                     ]
                   }
+                },
+                {
+                  name: 'image',
+                  title: 'Milestone Image',
+                  type: 'image',
+                  description: 'Optional photo for this milestone. Recommended: 800×600px landscape, max 1.5MB.',
+                  options: { hotspot: true },
+                  fields: [
+                    { name: 'alt', title: 'Alt Text', type: 'string' }
+                  ]
                 }
               ],
               preview: {
                 select: {
                   title: 'title',
-                  subtitle: 'year'
+                  subtitle: 'year',
+                  media: 'image'
                 }
               }
             }
