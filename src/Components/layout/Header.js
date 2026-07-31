@@ -16,7 +16,7 @@ const navigation = [
       { name: 'Facilities', href: '/facilities' },
     ],
   },
-  { name: 'Thematic Areas', href: '/research' },
+  { name: 'Projects', href: '/research' },
   { name: 'Publications', href: '/publications' },
   { name: 'Events', href: '/events' },
   { name: 'Blog', href: '/blog' },
