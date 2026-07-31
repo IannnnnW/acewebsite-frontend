@@ -22,7 +22,7 @@ const footerNavigation = {
   facilities: [
     { name: 'HPC Cluster', href: '/hpc' },
     { name: 'VR Laboratory', href: '/vr-lab' },
-    { name: 'Events', href: '/events' },
+    { name: 'Tele-learning Center', href: '/facilities/ace-telelearning-center' },
   ],
 }
 

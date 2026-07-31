@@ -258,10 +258,12 @@ export const allPublicationsQuery = `
 export const allProgramsQuery = `
   *[_type == "academicProgram"] | order(level) {
     _id,
+    name,
     slug,
     type,
     description,
     duration,
+    "image": image{ ..., "url": asset->url },
   }
 `
 
@@ -275,6 +277,7 @@ export const programBySlugQuery = `
     eligibility,
     duration,
     requirements,
+    "image": image{ ..., "url": asset->url },
     researchActivities[] {
       _key,
       title,
@@ -287,6 +290,18 @@ export const programBySlugQuery = `
     }
   }
 `
+
+export const trainingProgramsPageSettingsQuery = `*[_type == "trainingProgramsPageSettings"][0]{
+  heroHeading,
+  heroSubtitle,
+  "heroImage": heroImage{ ..., "url": asset->url },
+  ctaHeading,
+  ctaDescription,
+  ctaPrimaryText,
+  ctaPrimaryLink,
+  ctaSecondaryText,
+  ctaSecondaryLink
+}`
 
 // Query for all upcoming events
 export const upcomingEventsQuery = `

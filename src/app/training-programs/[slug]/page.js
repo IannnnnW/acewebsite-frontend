@@ -16,7 +16,8 @@ async function getProgram(slug) {
 }
 
 export default async function ProgramPage({ params }) {
-  const program = await getProgram(params.slug)
+  const { slug } = await params
+  const program = await getProgram(slug)
 
   if (!program) {
     return (
@@ -35,8 +36,21 @@ export default async function ProgramPage({ params }) {
     <div className="bg-white">
       {/* Header */}
       <div className="relative bg-gradient-to-br from-red-700 to-red-900 py-16 sm:py-24 overflow-hidden">
-        <ACEPattern rows={6} cols={9} opacity={0.08} className="absolute top-4 right-4 hidden lg:block" />
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        {program.image?.url ? (
+          <>
+            <Image
+              src={program.image.url}
+              alt=""
+              fill
+              priority
+              className="absolute inset-0 object-cover"
+            />
+            <div className="absolute inset-0 bg-gray-900/65" />
+          </>
+        ) : (
+          <ACEPattern rows={6} cols={9} opacity={0.08} className="absolute top-4 right-4 hidden lg:block" />
+        )}
+        <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-4xl">
             <Link href="/training-programs" className="inline-flex items-center text-red-100 hover:text-white mb-8">
               <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">

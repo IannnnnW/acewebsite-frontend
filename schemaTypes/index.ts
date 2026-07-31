@@ -19,5 +19,6 @@ import { teamPageSettings } from './teamPageSettings'
 import { aboutPageSettings } from './aboutPageSettings'
 import { eventsPageSettings } from './eventsPageSettings'
 import { socialPostType } from './socialPost'
+import { trainingProgramsPageSettings } from './trainingProgramsPageSettings'
 
-export const schemaTypes = [blogPostType, academicProgramType, facilityType, funderType, personType, projectType, publicationType, sitePageType, testimonialType, partnerType, heroSlide, eventType, eventHighlightType, aboutPage, contactPage, homePage, siteSettingsType, teamPageSettings, aboutPageSettings, eventsPageSettings, socialPostType]
+export const schemaTypes = [blogPostType, academicProgramType, facilityType, funderType, personType, projectType, publicationType, sitePageType, testimonialType, partnerType, heroSlide, eventType, eventHighlightType, aboutPage, contactPage, homePage, siteSettingsType, teamPageSettings, aboutPageSettings, eventsPageSettings, socialPostType, trainingProgramsPageSettings]
