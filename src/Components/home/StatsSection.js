@@ -23,7 +23,7 @@ export default async function StatsSection({ stats }) {
               {homeData.statsSection.sectionTitle}
             </h2>
             <p className="mt-4 text-lg leading-8 text-red-100">
-              Building capacity and advancing science across Africa
+              Building capacity and advancing scientific discovery.
             </p>
           </div>
 
