@@ -123,13 +123,13 @@ export default function HeroCarousel({ slides, tagline, institutionLine }) {
        * the full-bleed canvas, with room reserved at the bottom for the
        * navigation cluster below.
        */}
-      <div className="relative z-10 flex h-full flex-col justify-center px-6 sm:px-12 lg:px-20 xl:px-24 pb-24 sm:pb-20 max-w-3xl">
+      <div className="relative z-10 flex h-full flex-col justify-center px-6 sm:px-12 lg:px-20 xl:px-24 pb-24 sm:pb-20 max-w-4xl">
 
         <p className="text-xs sm:text-sm font-bold uppercase tracking-[0.24em] text-red-400 mb-6">
           {institutionLine || 'African Center of Excellence in Bioinformatics & Data Intensive Sciences'}
         </p>
 
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-white leading-[1.08] tracking-tight drop-shadow-sm">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-white leading-[1.1] tracking-tight drop-shadow-sm">
           {tagline || 'Advancing Health through Innovation'}
         </h1>
 
@@ -148,7 +148,7 @@ export default function HeroCarousel({ slides, tagline, institutionLine }) {
           }}
         >
           {activeSlide.description && (
-            <p className="text-lg lg:text-xl text-gray-200 leading-relaxed max-w-lg mb-10">
+            <p className="text-base lg:text-lg text-gray-200 leading-relaxed max-w-xl mb-10">
               {activeSlide.description}
             </p>
           )}
