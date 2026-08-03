@@ -3,21 +3,24 @@ import Image from 'next/image'
 import EventHighlight from '@/Components/events/EventHighlight'
 import EventsHeroCarousel from '@/Components/events/EventsHeroCarousel'
 import { client } from '@/lib/sanity'
-import { upcomingEventsQuery, pastEventsQuery, eventHighlightsQuery, eventsPageSettingsQuery } from '@/lib/queries'
+import { upcomingEventsQuery, ongoingEventsQuery, pastEventsQuery, eventHighlightsQuery, eventsPageSettingsQuery } from '@/lib/queries'
+import { formatEventDate } from '@/lib/formatEventDate'
 import AnimateOnScroll from '@/Components/shared/AnimateOnScroll'
 
 export const revalidate = 60 // Revalidate every 60 seconds
 
 async function getEventsData() {
   try {
-    const [upcomingEvents, pastEvents, eventHighlights] = await Promise.all([
+    const [upcomingEvents, ongoingEvents, pastEvents, eventHighlights] = await Promise.all([
       client.fetch(upcomingEventsQuery),
+      client.fetch(ongoingEventsQuery),
       client.fetch(pastEventsQuery),
       client.fetch(eventHighlightsQuery)
     ])
 
     return {
       upcomingEvents: upcomingEvents || [],
+      ongoingEvents: ongoingEvents || [],
       pastEvents: pastEvents || [],
       eventHighlights: eventHighlights || []
     }
@@ -25,6 +28,7 @@ async function getEventsData() {
     console.error('Error fetching events:', error)
     return {
       upcomingEvents: [],
+      ongoingEvents: [],
       pastEvents: [],
       eventHighlights: []
     }
@@ -32,7 +36,7 @@ async function getEventsData() {
 }
 
 export default async function EventsPage() {
-  const [{ upcomingEvents, pastEvents, eventHighlights }, pageSettings] = await Promise.all([
+  const [{ upcomingEvents, ongoingEvents, pastEvents, eventHighlights }, pageSettings] = await Promise.all([
     getEventsData(),
     client.fetch(eventsPageSettingsQuery),
   ])
@@ -83,9 +87,95 @@ export default async function EventsPage() {
         </div>
       )}
 
-      {/* Upcoming + Past Events */}
+      {/* Ongoing + Upcoming + Past Events */}
       <div className="py-24 bg-white">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
+
+          {/* Ongoing Events — events currently happening, shown ahead of Upcoming */}
+          {ongoingEvents.length > 0 && (
+            <div className="mb-16">
+              <div className="flex items-end justify-between mb-10">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-amber-600 mb-2">
+                    Happening Now
+                  </p>
+                  <h2 className="text-3xl font-bold text-gray-900">Ongoing Events</h2>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {ongoingEvents.map((event) => (
+                  <Link
+                    key={event._id}
+                    href={event.detailsLink}
+                    className="group flex flex-col rounded-2xl overflow-hidden bg-white border border-amber-200 shadow-sm hover:shadow-lg transition-all duration-300"
+                  >
+                    {/* Square image */}
+                    <div className="relative aspect-square overflow-hidden bg-gray-100 shrink-0">
+                      {event.image ? (
+                        <Image
+                          src={event.image}
+                          alt={event.title}
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 bg-gradient-to-br from-amber-600 to-amber-800 flex items-center justify-center">
+                          <svg className="h-10 w-10 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                        </div>
+                      )}
+                      {/* Ongoing badge */}
+                      <div className="absolute top-3 left-3">
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-500 px-2.5 py-1 text-xs font-semibold text-white shadow-sm">
+                          <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
+                          Ongoing Now
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Content — identical structure to upcoming cards */}
+                    <div className="flex flex-col flex-1 p-5">
+                      <div className="flex items-center gap-2 mb-3">
+                        <time className="text-xs font-medium text-gray-400">
+                          {formatEventDate(event.date, event.endDate, { dateOptions: { day: 'numeric', month: 'short', year: 'numeric' } })}
+                        </time>
+                        {event.category && (
+                          <>
+                            <span className="text-gray-200">·</span>
+                            <span className="text-xs font-semibold text-red-700 capitalize">
+                              {event.category}
+                            </span>
+                          </>
+                        )}
+                      </div>
+
+                      <h3 className="text-base font-bold text-gray-900 leading-snug group-hover:text-red-700 transition-colors line-clamp-3 flex-1 mb-4">
+                        {event.title}
+                      </h3>
+
+                      {event.location && (
+                        <p className="text-xs text-gray-400 flex items-center gap-1.5 mb-4">
+                          <svg className="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0zM19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                          </svg>
+                          {event.location}
+                        </p>
+                      )}
+
+                      <span className="text-sm font-semibold text-red-700 group-hover:text-red-900 transition-colors inline-flex items-center gap-1.5 mt-auto">
+                        Learn more
+                        <svg className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Upcoming Events — section header */}
           <div className="flex items-end justify-between mb-10">
@@ -147,9 +237,7 @@ export default async function EventsPage() {
                     {/* Date · Category */}
                     <div className="flex items-center gap-2.5 mb-4">
                       <time className="text-sm font-medium text-gray-500">
-                        {new Date(upcomingEvents[0].date).toLocaleDateString('en-GB', {
-                          day: 'numeric', month: 'long', year: 'numeric'
-                        })}
+                        {formatEventDate(upcomingEvents[0].date, upcomingEvents[0].endDate, { dateOptions: { day: 'numeric', month: 'long', year: 'numeric' } })}
                       </time>
                       {upcomingEvents[0].category && (
                         <>
@@ -227,9 +315,7 @@ export default async function EventsPage() {
                         {/* Date · Category */}
                         <div className="flex items-center gap-2 mb-3">
                           <time className="text-xs font-medium text-gray-400">
-                            {new Date(event.date).toLocaleDateString('en-GB', {
-                              day: 'numeric', month: 'short', year: 'numeric'
-                            })}
+                            {formatEventDate(event.date, event.endDate, { dateOptions: { day: 'numeric', month: 'short', year: 'numeric' } })}
                           </time>
                           {event.category && (
                             <>
@@ -323,9 +409,7 @@ export default async function EventsPage() {
                     <div className="flex flex-col flex-1 p-5">
                       <div className="flex items-center gap-2 mb-3">
                         <time className="text-xs font-medium text-gray-400">
-                          {new Date(event.date).toLocaleDateString('en-GB', {
-                            day: 'numeric', month: 'short', year: 'numeric'
-                          })}
+                          {formatEventDate(event.date, event.endDate, { dateOptions: { day: 'numeric', month: 'short', year: 'numeric' } })}
                         </time>
                         {event.category && (
                           <>

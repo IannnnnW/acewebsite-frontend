@@ -3,6 +3,7 @@ import Image from 'next/image'
 import SafeTweet from '@/Components/shared/SafeTweet'
 import { client } from '@/lib/sanity'
 import { eventBySlugQuery, allEventsQuery } from '@/lib/queries'
+import { formatEventDate } from '@/lib/formatEventDate'
 import { notFound } from 'next/navigation'
 import EventGallery from '@/Components/events/EventGallery'
 
@@ -54,15 +55,6 @@ export default async function EventDetailsPage({ params }) {
       networking: 'from-red-700 to-red-900',
     }
     return colors[category] || 'from-red-700 to-red-900'
-  }
-
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    })
   }
 
   const formatTime = (dateString) => {
@@ -137,7 +129,9 @@ export default async function EventDetailsPage({ params }) {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
                   </svg>
                   <div>
-                    <div className="font-semibold">{formatDate(event.date)}</div>
+                    <div className="font-semibold">
+                      {formatEventDate(event.date, event.endDate, { locale: 'en-US', dateOptions: { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' } })}
+                    </div>
                     <div className="text-sm">{formatTime(event.date)}</div>
                   </div>
                 </div>

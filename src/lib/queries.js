@@ -303,15 +303,36 @@ export const trainingProgramsPageSettingsQuery = `*[_type == "trainingProgramsPa
   ctaSecondaryLink
 }`
 
-// Query for upcoming + ongoing events — status is set manually in the
-// Studio, not derived from the date, so an event stays here until someone
-// moves it to "Past" themselves.
+// Query for upcoming events — status is set manually in the Studio, not
+// derived from the date, so an event stays here until someone moves it to
+// "Ongoing" or "Past" themselves.
 export const upcomingEventsQuery = `
-  *[_type == "event" && status != "past"] | order(date asc) {
+  *[_type == "event" && status == "upcoming"] | order(date asc) {
     _id,
     title,
     description,
     date,
+    endDate,
+    category,
+    location,
+    "image": image.asset->url,
+    status,
+    speakers,
+    topics,
+    capacity,
+    registrationLink,
+    "detailsLink": "/events/" + slug.current
+  }
+`
+
+// Query for events currently marked Ongoing
+export const ongoingEventsQuery = `
+  *[_type == "event" && status == "ongoing"] | order(date asc) {
+    _id,
+    title,
+    description,
+    date,
+    endDate,
     category,
     location,
     "image": image.asset->url,
@@ -331,6 +352,7 @@ export const pastEventsQuery = `
     title,
     description,
     date,
+    endDate,
     category,
     location,
     "image": image.asset->url,
@@ -363,6 +385,7 @@ export const eventBySlugQuery = `
     title,
     description,
     date,
+    endDate,
     category,
     location,
     "image": image.asset->url,
@@ -428,6 +451,7 @@ export const featuredEventsQuery = `
     title,
     description,
     date,
+    endDate,
     category,
     location,
     "image": image.asset->url,
@@ -446,6 +470,7 @@ export const eventsByCategoryQuery = `
     title,
     description,
     date,
+    endDate,
     category,
     location,
     "image": image.asset->url,
@@ -465,6 +490,7 @@ export const allEventsQuery = `
     title,
     description,
     date,
+    endDate,
     category,
     location,
     "image": image.asset->url,

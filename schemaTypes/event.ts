@@ -31,8 +31,16 @@ export const eventType = defineType({
     defineField({
       name: 'date',
       title: 'Event Date',
+      description: 'The start date/time. For a single-day event this is the only date needed.',
       type: 'datetime',
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'endDate',
+      title: 'End Date (for multi-day events)',
+      description: 'Optional — set this for events that run over more than one day (e.g. a two-week workshop from 18 March to 1 April). Leave blank for single-day events.',
+      type: 'datetime',
+      validation: (Rule) => Rule.min(Rule.valueOfField('date')).error('End date must be on or after the event date'),
     }),
     defineField({
       name: 'category',
