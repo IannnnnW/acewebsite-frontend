@@ -5,6 +5,7 @@ export const STAFF_CATEGORIES = [
   { value: 'admin', label: 'Administration' },
   { value: 'bioinformatics_researchers', label: 'Bioinformatics Researchers' },
   { value: 'ai', label: 'AI Researchers' },
+  { value: 'postdoc_fellows', label: 'PostDoc Fellows' },
   { value: 'phd_fellows', label: 'PhD Fellows' },
   { value: 'msc_fellows', label: 'MSc Fellows' },
   { value: 'it', label: 'HPC Engineering' },

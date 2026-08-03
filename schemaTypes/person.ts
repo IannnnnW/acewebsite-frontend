@@ -48,6 +48,7 @@ export const personType = defineType({
           {title: 'HPC Engineering', value: 'it'},
           {title: 'Software Development', value: 'software_development'},
           {title: 'Interns', value: 'interns'},
+          {title: 'PostDoc Fellows', value: 'postdoc_fellows'},
           {title: 'MSc Fellows', value: 'msc_fellows'},
           {title: 'PhD Fellows', value: 'phd_fellows'},
           {title: 'Bioinformatics Researchers', value: 'bioinformatics_researchers'},
