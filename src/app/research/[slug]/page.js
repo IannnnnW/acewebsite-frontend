@@ -12,7 +12,7 @@ const THEMATIC_AREA_LABELS = {
   human_genomics: 'Human Genomics & Cancer',
   malaria: 'Malaria Computational Biology',
   hpc: 'High Performance Computing',
-  pandemic_preparedness: 'Pandemic Preparedness',
+  pandemic_preparedness: 'Disease Modelling and Pandemic Preparedness',
   capacity_building_and_training: 'Training and Capacity Strengthening',
   machine_learning: 'Responsible AI and Digital Health Innovation',
   visualization: 'Enhanced Visualization',

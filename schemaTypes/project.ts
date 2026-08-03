@@ -76,7 +76,7 @@ export const projectType = defineType({
           {title: 'Human Genomics & Cancer', value: 'human_genomics'},
           {title: 'Malaria Computational Biology', value: 'malaria'},
           {title: 'High Performance Computing', value: 'hpc'},
-          {title: 'Pandemic Preparedness', value: 'pandemic_preparedness'},
+          {title: 'Disease Modelling and Pandemic Preparedness', value: 'pandemic_preparedness'},
           {title: 'Training and Capacity Strengthening', value: 'capacity_building_and_training'},
           {title: 'Responsible AI and Digital Health Innovation', value: 'machine_learning'},
           {title: 'Enhanced Visualization', value: 'visualization'},

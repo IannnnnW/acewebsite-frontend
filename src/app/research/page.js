@@ -16,7 +16,7 @@ const THEMATIC_AREAS = [
   { value: 'human_genomics', label: 'Human Genomics & Cancer' },
   { value: 'malaria', label: 'Malaria Computational Biology' },
   { value: 'hpc', label: 'High Performance Computing' },
-  { value: 'pandemic_preparedness', label: 'Pandemic Preparedness' },
+  { value: 'pandemic_preparedness', label: 'Disease Modelling and Pandemic Preparedness' },
   { value: 'capacity_building_and_training', label: 'Training and Capacity Strengthening' },
   { value: 'machine_learning', label: 'Responsible AI and Digital Health Innovation' },
   { value: 'visualization', label: 'Enhanced Visualization' },

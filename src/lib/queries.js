@@ -303,9 +303,11 @@ export const trainingProgramsPageSettingsQuery = `*[_type == "trainingProgramsPa
   ctaSecondaryLink
 }`
 
-// Query for all upcoming events
+// Query for upcoming + ongoing events — status is set manually in the
+// Studio, not derived from the date, so an event stays here until someone
+// moves it to "Past" themselves.
 export const upcomingEventsQuery = `
-  *[_type == "event" && isPast == false && date >= now()] | order(date asc) {
+  *[_type == "event" && status != "past"] | order(date asc) {
     _id,
     title,
     description,
@@ -313,7 +315,7 @@ export const upcomingEventsQuery = `
     category,
     location,
     "image": image.asset->url,
-    isPast,
+    status,
     speakers,
     topics,
     capacity,
@@ -324,7 +326,7 @@ export const upcomingEventsQuery = `
 
 // Query for all past events
 export const pastEventsQuery = `
-  *[_type == "event" && (isPast == true || date < now())] | order(date desc) {
+  *[_type == "event" && status == "past"] | order(date desc) {
     _id,
     title,
     description,
@@ -332,7 +334,7 @@ export const pastEventsQuery = `
     category,
     location,
     "image": image.asset->url,
-    isPast,
+    status,
     speakers,
     topics,
     "detailsLink": "/events/" + slug.current
@@ -364,7 +366,7 @@ export const eventBySlugQuery = `
     category,
     location,
     "image": image.asset->url,
-    isPast,
+    status,
     speakers,
     topics,
     capacity,
@@ -421,7 +423,7 @@ export const recentBlogPostsQuery = `
 
 // Query for featured events
 export const featuredEventsQuery = `
-  *[_type == "event" && featured == true && isPast == false] | order(date asc) [0...3] {
+  *[_type == "event" && featured == true && status != "past"] | order(date asc) [0...3] {
     _id,
     title,
     description,
@@ -447,7 +449,7 @@ export const eventsByCategoryQuery = `
     category,
     location,
     "image": image.asset->url,
-    isPast,
+    status,
     speakers,
     topics,
     capacity,
@@ -466,7 +468,7 @@ export const allEventsQuery = `
     category,
     location,
     "image": image.asset->url,
-    isPast,
+    status,
     speakers,
     topics,
     capacity,

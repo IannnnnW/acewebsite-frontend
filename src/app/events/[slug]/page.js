@@ -163,7 +163,7 @@ export default async function EventDetailsPage({ params }) {
               </div>
 
               {/* CTA Buttons */}
-              {!event.isPast && event.registrationLink && (
+              {event.status !== 'past' && event.registrationLink && (
                 <div className="flex gap-4 flex-wrap">
                   <Link
                     href={event.registrationLink}
@@ -408,10 +408,10 @@ export default async function EventDetailsPage({ params }) {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              {event.isPast ? 'Interested in Similar Events?' : 'Ready to Join Us?'}
+              {event.status === 'past' ? 'Interested in Similar Events?' : 'Ready to Join Us?'}
             </h2>
             <p className="mt-4 text-lg text-red-100">
-              {event.isPast
+              {event.status === 'past'
                 ? 'Check out our upcoming events and opportunities'
                 : 'Register now to secure your spot at this exciting event'}
             </p>

@@ -15,7 +15,8 @@ export default function EventCard({ event, index = 0 }) {
   }, [index])
 
   useEffect(() => {
-    if (!event.date || event.isPast) return
+    // Countdown only makes sense for events that haven't started yet
+    if (!event.date || event.status !== 'upcoming') return
 
     const calculateTimeLeft = () => {
       const difference = new Date(event.date) - new Date()
@@ -35,7 +36,7 @@ export default function EventCard({ event, index = 0 }) {
     }, 60000) // Update every minute
 
     return () => clearInterval(interval)
-  }, [event.date, event.isPast])
+  }, [event.date, event.status])
 
   const getCategoryColor = (category) => {
     const colors = {
@@ -91,10 +92,12 @@ export default function EventCard({ event, index = 0 }) {
               </div>
 
               {/* Status Badge */}
-              {!event.isPast && (
+              {event.status !== 'past' && (
                 <div className="absolute top-4 right-4">
-                  <span className="inline-flex items-center rounded-full bg-emerald-500 px-3 py-1 text-xs font-semibold text-white shadow-lg animate-pulse-slow">
-                    Upcoming
+                  <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold text-white shadow-lg ${
+                    event.status === 'ongoing' ? 'bg-amber-500 animate-pulse' : 'bg-emerald-500 animate-pulse-slow'
+                  }`}>
+                    {event.status === 'ongoing' ? 'Ongoing' : 'Upcoming'}
                   </span>
                 </div>
               )}
@@ -136,7 +139,7 @@ export default function EventCard({ event, index = 0 }) {
               )}
 
               {/* Countdown Timer for Upcoming Events */}
-              {!event.isPast && timeLeft && (
+              {event.status === 'upcoming' && timeLeft && (
                 <div className="mt-4 pt-4 border-t border-gray-200">
                   <div className="flex items-center justify-center gap-4 text-center">
                     <div>
@@ -201,7 +204,7 @@ export default function EventCard({ event, index = 0 }) {
             </div>
 
             <div className="space-y-2">
-              {!event.isPast && event.registrationLink && (
+              {event.status !== 'past' && event.registrationLink && (
                 <Link
                   href={event.registrationLink}
                   className="block w-full text-center rounded-md bg-white px-4 py-3 text-sm font-semibold text-red-700 shadow-sm hover:bg-gray-100 transition-colors"
@@ -214,7 +217,7 @@ export default function EventCard({ event, index = 0 }) {
                   href={event.detailsLink}
                   className="block w-full text-center rounded-md bg-white/10 border-2 border-white px-4 py-3 text-sm font-semibold text-white hover:bg-white/20 transition-colors"
                 >
-                  {event.isPast ? 'View Summary' : 'Learn More'}
+                  {event.status === 'past' ? 'View Summary' : 'Learn More'}
                 </Link>
               )}
             </div>

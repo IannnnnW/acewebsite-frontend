@@ -166,7 +166,7 @@ const iconMap = {
   ),
 
   /**
-   * Pandemic Preparedness
+   * Disease Modelling and Pandemic Preparedness
    * Coronavirus-style pathogen — central nucleus with 8 radiating spikes,
    * each tipped with a small filled circle
    */

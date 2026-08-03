@@ -153,10 +153,20 @@ export const eventType = defineType({
       of: [{ type: 'url' }],
     }),
     defineField({
-      name: 'isPast',
-      title: 'Is Past Event',
-      type: 'boolean',
-      initialValue: false,
+      name: 'status',
+      title: 'Event Status',
+      type: 'string',
+      description: 'Manually controls which stage this event is shown in on the site — move it through Upcoming → Ongoing → Past yourself as the event progresses. Not derived automatically from the date.',
+      options: {
+        list: [
+          { title: 'Upcoming', value: 'upcoming' },
+          { title: 'Ongoing', value: 'ongoing' },
+          { title: 'Past', value: 'past' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'upcoming',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'featured',
@@ -231,13 +241,14 @@ export const eventType = defineType({
       title: 'title',
       date: 'date',
       category: 'category',
+      status: 'status',
       media: 'image',
     },
     prepare(selection) {
-      const { title, date, category } = selection
+      const { title, date, category, status } = selection
       return {
         title: title,
-        subtitle: `${category} - ${new Date(date).toLocaleDateString()}`,
+        subtitle: `${status ? `[${status}] ` : ''}${category} - ${new Date(date).toLocaleDateString()}`,
         media: selection.media,
       }
     },
