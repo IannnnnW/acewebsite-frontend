@@ -47,7 +47,7 @@ export default function EdctpHeaderNav({ logoUrl, programName }) {
   const isActive = (href) => pathname === href || pathname.startsWith(href + '/')
 
   const linkClass = (href) =>
-    `relative px-2.5 py-1.5 text-xs font-medium transition-colors whitespace-nowrap ${
+    `relative px-4 py-2 text-base font-medium transition-colors whitespace-nowrap ${
       isActive(href)
         ? 'text-idblue-500 font-semibold after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-idblue-500 after:rounded-full'
         : 'text-idblue-200 hover:text-white'
@@ -55,7 +55,7 @@ export default function EdctpHeaderNav({ logoUrl, programName }) {
 
   return (
     <header className="sticky top-0 z-30 bg-idblue-900 border-b border-idblue-800 shadow-sm">
-      <div className="mx-auto max-w-7xl px-6 py-3 flex items-center justify-between gap-4">
+      <div className="mx-auto max-w-7xl px-6 py-1.5 flex items-center justify-between gap-4">
         <Link href="/edctp-idm" className="flex items-center shrink-0">
           {logoUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
@@ -74,7 +74,7 @@ export default function EdctpHeaderNav({ logoUrl, programName }) {
           {mobileOpen ? <Cross2Icon className="h-5 w-5" /> : <HamburgerMenuIcon className="h-5 w-5" />}
         </button>
 
-        <nav className="hidden lg:flex items-center gap-1 flex-1 justify-center">
+        <nav className="hidden lg:flex items-center gap-2 flex-1 justify-center">
           {NAV_ITEMS.map((item) => (
             <Link key={item.href} href={item.href} className={linkClass(item.href)}>
               {item.label}
@@ -97,7 +97,7 @@ export default function EdctpHeaderNav({ logoUrl, programName }) {
               key={item.href}
               href={item.href}
               onClick={() => setMobileOpen(false)}
-              className={`py-2 text-sm font-medium border-b border-idblue-800 last:border-0 ${
+              className={`py-2.5 text-base font-medium border-b border-idblue-800 last:border-0 ${
                 isActive(item.href) ? 'text-white' : 'text-idblue-100 hover:text-white'
               }`}
             >
