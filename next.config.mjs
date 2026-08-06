@@ -10,6 +10,15 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/acewebsite-backend',
+        destination: '/acewebsite-backend/main',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

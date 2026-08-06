@@ -1,0 +1,146 @@
+{
+  "nav": {
+    "opportunities": "Opportunités",
+    "about": "À propos",
+    "partners": "Collaborateurs",
+    "training": "Formation",
+    "trainingSites": "Sites de formation",
+    "mentors": "Mentors",
+    "fellows": "Boursiers",
+    "projects": "Projets",
+    "trainingEvents": "Événements",
+    "publications": "Publications",
+    "blog": "Blog",
+    "newsletter": "Bulletin d'information",
+    "backToAce": "ACE Uganda"
+  },
+  "hero": {
+    "applyNow": "Postuler",
+    "learnMore": "En savoir plus",
+    "ctaOpportunities": "Voir les opportunités"
+  },
+  "common": {
+    "learnMore": "En savoir plus",
+    "viewAll": "Voir tout",
+    "readMore": "Lire la suite"
+  },
+  "stats": {
+    "researchers": "Chercheurs à former",
+    "cohorts": "Cohortes annuelles de formation",
+    "fellowships": "Bourses avancées",
+    "workPackages": "Lots de travaux"
+  },
+  "home": {
+    "sectionsTitle": "Découvrir IDM Africa",
+    "sectionsSubtitle": "Tout ce que le programme offre, en un seul endroit",
+    "latestPosts": "Dernières actualités du blog",
+    "viewAllPosts": "Voir tous les articles",
+    "sections": {
+      "opportunities": "Appels ouverts, bourses et dates limites de candidature pour les chercheurs d'Afrique subsaharienne.",
+      "training": "Sites de formation, boursiers, types de projets et événements de formation à venir.",
+      "partners": "Le consortium de bénéficiaires, collaborateurs et sites partenaires derrière le programme.",
+      "publications": "Recherches évaluées par des pairs et rapports produits par le réseau IDM Africa.",
+      "blog": "Actualités, témoignages et mises à jour du programme et de ses boursiers.",
+      "newsletter": "Numéros du bulletin téléchargeables couvrant les étapes clés du programme."
+    }
+  },
+  "opportunities": {
+    "title": "Opportunités",
+    "subtitle": "Appels à candidatures, bourses et opportunités de formation",
+    "pastTitle": "Opportunités passées",
+    "empty": "Aucune opportunité active pour le moment. Revenez bientôt.",
+    "deadline": "Date limite :",
+    "eligibility": "Critères d'éligibilité",
+    "applyNow": "Postuler",
+    "downloadDocument": "Télécharger le document d'appel",
+    "statusOpen": "Ouvert",
+    "statusClosed": "Fermé",
+    "statusUpcoming": "À venir"
+  },
+  "about": {
+    "title": "À propos du programme",
+    "mission": "Mission",
+    "goals": "Buts"
+  },
+  "partners": {
+    "title": "Collaborateurs",
+    "beneficiaries": "Bénéficiaires",
+    "collaborators": "Collaborateurs",
+    "partnerSites": "Sites partenaires",
+    "visit": "Visiter",
+    "empty": "Informations sur les collaborateurs à venir.",
+    "mapTitle": "Carte mondiale des collaborateurs",
+    "mapEmpty": "Données de localisation à venir.",
+    "statCollaborators": "Collaborateurs",
+    "statCountries": "Pays",
+    "statContinents": "Continents"
+  },
+  "training": {
+    "title": "Formation",
+    "hubIntro": "IDM Africa dispense des formations immersives de courte durée, fondées sur une théorie solide et une application pratique, ainsi qu'une bourse avancée d'un an avec mentorat. Découvrez où nous formons, qui sont nos mentors et boursiers, et les événements de formation à venir.",
+    "tabTrainingSites": "Sites de formation",
+    "tabFellows": "Boursiers",
+    "tabMentors": "Mentors",
+    "tabProjects": "Projets",
+    "tabEvents": "Événements",
+    "exampleDatasets": "Exemples de jeux de données",
+    "emptySites": "Informations sur les sites de formation à venir.",
+    "emptyFellows": "Profils des boursiers à venir.",
+    "emptyMentors": "Profils des mentors à venir.",
+    "emptyProjects": "Informations sur les types de projets à venir.",
+    "emptyEvents": "Aucun événement de formation à venir pour le moment.",
+    "addToCalendar": "Ajouter au calendrier",
+    "googleCalendar": "Google Agenda"
+  },
+  "fellow": {
+    "cohort": "Cohorte",
+    "institution": "Institution d'origine",
+    "country": "Pays",
+    "researchFocus": "Axe de recherche",
+    "projectTitle": "Projet de formation",
+    "backToFellows": "Tous les boursiers"
+  },
+  "mentor": {
+    "institution": "Institution",
+    "country": "Pays",
+    "expertise": "Domaine d'expertise",
+    "backToMentors": "Tous les mentors"
+  },
+  "publications": {
+    "title": "Publications",
+    "filterByYear": "Filtrer par année",
+    "allYears": "Toutes les années",
+    "empty": "Aucune publication pour le moment.",
+    "doi": "DOI",
+    "viewPublication": "Voir la publication",
+    "typeJournal": "Article de revue",
+    "typeBook": "Livre",
+    "typeConference": "Conférence",
+    "typeReport": "Rapport"
+  },
+  "blog": {
+    "title": "Blog",
+    "empty": "Aucun article de blog pour le moment.",
+    "relatedPosts": "Articles connexes",
+    "backToBlog": "Tous les articles"
+  },
+  "newsletter": {
+    "title": "Archive du bulletin",
+    "empty": "Aucun numéro du bulletin publié pour le moment.",
+    "downloadPdf": "Télécharger le numéro"
+  },
+  "footer": {
+    "grantNumber": "N° de subvention 101249031",
+    "contactTitle": "Contact",
+    "followIdi": "Suivre IDI Uganda",
+    "followAce": "Suivre ACE Uganda",
+    "acknowledgement": "Ce projet (IDM-Africa, subvention n° 101249031) a reçu un financement de l'entreprise commune EDCTP3 dans le cadre du programme de recherche et d'innovation Horizon Europe de l'Union européenne.",
+    "copyright": "© IDM Africa · Un programme de l'IDI, Université de Makerere",
+    "backToAce": "Retour au site principal d'ACE Uganda"
+  },
+  "site": {
+    "programName": "IDM Afrique",
+    "programFullName": "Modélisation des Maladies Infectieuses en Afrique",
+    "institutionLine": "Un centre stratégique de formation à l'Institut des Maladies Infectieuses, Université Makerere"
+  }
+}

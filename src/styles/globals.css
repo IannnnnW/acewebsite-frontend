@@ -7,10 +7,41 @@
   --color-red-700: #a71c20;
   --color-red-800: #870b0b;
   --color-red-900: #870b0b;
+
+  /* IDM Africa — IDI Bright Blue (interactive) → Dark Navy (structure). Microsite only. */
+  --color-idblue-50: #E5F7FD;
+  --color-idblue-100: #CCEEFB;
+  --color-idblue-200: #99DEF7;
+  --color-idblue-300: #66CDF3;
+  --color-idblue-400: #33BCEF;
+  --color-idblue-500: #00AEEF;
+  --color-idblue-600: #0092C9;
+  --color-idblue-700: #0077A4;
+  --color-idblue-800: #005580;
+  --color-idblue-900: #003366;
+  --color-idblue-950: #001F3F;
+
+  /* IDM Africa — Crimson Red (CTAs, primary actions, status badges) */
+  --color-idred-50: #FDE8E9;
+  --color-idred-100: #FBCECF;
+  --color-idred-200: #F79EA0;
+  --color-idred-300: #F06E71;
+  --color-idred-400: #E03E42;
+  --color-idred-500: #C5202A;
+  --color-idred-600: #a71c20;
+  --color-idred-700: #a71c20;
+  --color-idred-800: #8a1519;
+  --color-idred-900: #6d1013;
+  --color-idred-950: #450A0D;
 }
 
 @layer base {
   :root {
+    /* IDM Africa — Official Brand Colors */
+    --color-idblue-bright: #00AEEF;  /* IDI Bright Blue — interactive */
+    --color-idblue-navy:   #003366;  /* IDI Dark Navy — structure */
+    /* IDM Crimson Red — actions: #a71c20 (defined as --color-red-600/700 in @theme above) */
+
     /* Primary colors */
     --color-primary: 216 82% 39%;
     --color-primary-foreground: 0 0% 100%;

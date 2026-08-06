@@ -1,0 +1,146 @@
+{
+  "nav": {
+    "opportunities": "Opportunities",
+    "about": "About",
+    "partners": "Collaborators",
+    "training": "Training",
+    "trainingSites": "Training Sites",
+    "mentors": "Mentors",
+    "fellows": "Fellows",
+    "projects": "Projects",
+    "trainingEvents": "Events",
+    "publications": "Publications",
+    "blog": "Blog",
+    "newsletter": "Newsletter",
+    "backToAce": "ACE Uganda"
+  },
+  "hero": {
+    "applyNow": "Apply Now",
+    "learnMore": "Learn More",
+    "ctaOpportunities": "View Opportunities"
+  },
+  "common": {
+    "learnMore": "Learn More",
+    "viewAll": "View all",
+    "readMore": "Read more"
+  },
+  "stats": {
+    "researchers": "Researchers to be Trained",
+    "cohorts": "Annual Training Cohorts",
+    "fellowships": "Advanced Fellowships",
+    "workPackages": "Work Packages"
+  },
+  "home": {
+    "sectionsTitle": "Explore IDM Africa",
+    "sectionsSubtitle": "Everything the program offers, in one place",
+    "latestPosts": "Latest from the Blog",
+    "viewAllPosts": "View all posts",
+    "sections": {
+      "opportunities": "Open calls, fellowships, and application deadlines for researchers across sub-Saharan Africa.",
+      "training": "Training sites, fellows, project types, and upcoming training events.",
+      "partners": "The consortium of beneficiaries, collaborators, and partner sites behind the program.",
+      "publications": "Peer-reviewed research and reports produced by the IDM Africa network.",
+      "blog": "News, stories, and updates from the program and its fellows.",
+      "newsletter": "Downloadable newsletter issues covering program milestones."
+    }
+  },
+  "opportunities": {
+    "title": "Opportunities",
+    "subtitle": "Calls for applications, fellowships, and training opportunities",
+    "pastTitle": "Past Opportunities",
+    "empty": "No active opportunities at this time. Check back soon.",
+    "deadline": "Deadline:",
+    "eligibility": "Eligibility",
+    "applyNow": "Apply Now",
+    "downloadDocument": "Download Call Document",
+    "statusOpen": "Open",
+    "statusClosed": "Closed",
+    "statusUpcoming": "Upcoming"
+  },
+  "about": {
+    "title": "About the Program",
+    "mission": "Mission",
+    "goals": "Goals"
+  },
+  "partners": {
+    "title": "Collaborators",
+    "beneficiaries": "Beneficiaries",
+    "collaborators": "Collaborators",
+    "partnerSites": "Partner Sites",
+    "visit": "Visit",
+    "empty": "Collaborator information coming soon.",
+    "mapTitle": "Global Map of Collaborators",
+    "mapEmpty": "Location data coming soon.",
+    "statCollaborators": "Collaborators",
+    "statCountries": "Countries",
+    "statContinents": "Continents"
+  },
+  "training": {
+    "title": "Training",
+    "hubIntro": "IDM Africa delivers immersive short-term trainings grounded in strong theory and practical application, alongside a 1-year advanced fellowship with mentorship. Explore where we train, who our mentors and fellows are, and upcoming training events.",
+    "tabTrainingSites": "Training Sites",
+    "tabFellows": "Fellows",
+    "tabMentors": "Mentors",
+    "tabProjects": "Projects",
+    "tabEvents": "Events",
+    "exampleDatasets": "Example Datasets",
+    "emptySites": "Training site information coming soon.",
+    "emptyFellows": "Fellow profiles coming soon.",
+    "emptyMentors": "Mentor profiles coming soon.",
+    "emptyProjects": "Project type information coming soon.",
+    "emptyEvents": "No upcoming training events at this time.",
+    "addToCalendar": "Add to Calendar",
+    "googleCalendar": "Google Calendar"
+  },
+  "fellow": {
+    "cohort": "Cohort",
+    "institution": "Home Institution",
+    "country": "Country",
+    "researchFocus": "Research Focus",
+    "projectTitle": "Training Project",
+    "backToFellows": "All Fellows"
+  },
+  "mentor": {
+    "institution": "Institution",
+    "country": "Country",
+    "expertise": "Area of Expertise",
+    "backToMentors": "All Mentors"
+  },
+  "publications": {
+    "title": "Publications",
+    "filterByYear": "Filter by Year",
+    "allYears": "All Years",
+    "empty": "No publications yet.",
+    "doi": "DOI",
+    "viewPublication": "View Publication",
+    "typeJournal": "Journal Article",
+    "typeBook": "Book",
+    "typeConference": "Conference",
+    "typeReport": "Report"
+  },
+  "blog": {
+    "title": "Blog",
+    "empty": "No blog posts yet.",
+    "relatedPosts": "Related Posts",
+    "backToBlog": "All Posts"
+  },
+  "newsletter": {
+    "title": "Newsletter Archive",
+    "empty": "No newsletter issues published yet.",
+    "downloadPdf": "Download Issue"
+  },
+  "footer": {
+    "grantNumber": "Grant No. 101249031",
+    "contactTitle": "Contact",
+    "followIdi": "Follow IDI Uganda",
+    "followAce": "Follow ACE Uganda",
+    "acknowledgement": "This project (IDM-Africa, Grant No. 101249031) has received funding from the EDCTP3 Joint Undertaking under the European Union's Horizon Europe research and innovation programme.",
+    "copyright": "© IDM Africa · A program of IDI Makerere University",
+    "backToAce": "Back to ACE Uganda Main Site"
+  },
+  "site": {
+    "programName": "IDM Africa",
+    "programFullName": "Infectious Diseases Modelling Africa",
+    "institutionLine": "A Strategic Training Hub at the Infectious Diseases Institute, Makerere University"
+  }
+}
