@@ -178,8 +178,8 @@ export default function CollaboratorsMap({ beneficiaries = [], collaborators = [
         style={{ height: '100%', width: '100%' }}
       >
         <TileLayer
-          attribution='Map <a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a> | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <FitToMarkers points={allPoints} />
 
