@@ -5,6 +5,15 @@ import { fetchWithFallback } from '@/lib/fallback'
 import AnimateOnScroll from '@/Components/shared/AnimateOnScroll'
 import ACEPattern from '@/Components/shared/ACEPattern'
 
+// The "Enhanced Visualization" card's icon is normally driven by Sanity's
+// focusAreasSection.focusAreas[].icon field, but content-editing access
+// wasn't available when this was requested — overriding it here to a
+// VR-headset glyph (Tabler Icons' "cardboards") instead of the generic
+// bar-chart icon Sanity has stored. Update the Sanity field directly and
+// remove this once it's no longer needed.
+const VISUALIZATION_ICON =
+  'M3 8v8.5a2.5 2.5 0 0 0 2.5 2.5h1.06a3 3 0 0 0 2.34 -1.13l1.54 -1.92a2 2 0 0 1 3.12 0l1.54 1.92a3 3 0 0 0 2.34 1.13h1.06a2.5 2.5 0 0 0 2.5 -2.5v-8.5a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2 M7 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0 M15 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0'
+
 export default async function FocusAreasSection() {
   const homeData = await fetchWithFallback(
     () => client.fetch(`*[_type == "homePage"][0]`),
@@ -60,7 +69,11 @@ export default async function FocusAreasSection() {
                 {/* Icon badge */}
                 <div className="absolute top-5 left-5 inline-flex h-11 w-11 items-center justify-center rounded-lg bg-white/15 backdrop-blur-sm ring-1 ring-white/25 group-hover:bg-red-700 transition-colors">
                   <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d={area.icon} />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d={area.title?.toLowerCase().includes('visualization') ? VISUALIZATION_ICON : area.icon}
+                    />
                   </svg>
                 </div>
 
