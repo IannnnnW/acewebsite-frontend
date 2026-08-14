@@ -65,7 +65,7 @@ export default function IdmHome({ homePage, settings, posts, partners }) {
             <div className="flex items-center gap-3 mb-6">
               <div className="h-px w-12 bg-idblue-500" />
               <span className="text-idblue-500 text-xs font-bold uppercase tracking-[0.25em]">
-                {settings?.programName || 'IDM Africa'}
+                {settings?.programName || 'IDM-Africa'}
               </span>
             </div>
 

@@ -4,7 +4,7 @@ import MentorsPage from '@/Components/edctp/pages/MentorsPage'
 
 export const revalidate = 60
 
-export const metadata = { title: 'Mentors | IDM Africa' }
+export const metadata = { title: 'Mentors | IDM-Africa' }
 
 export default async function Page() {
   const mentors = await client.fetch(edctpMentorsQuery)

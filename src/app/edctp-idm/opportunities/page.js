@@ -4,7 +4,7 @@ import OpportunitiesPage from '@/Components/edctp/pages/OpportunitiesPage'
 
 export const revalidate = 60
 
-export const metadata = { title: 'Opportunities | IDM Africa' }
+export const metadata = { title: 'Opportunities | IDM-Africa' }
 
 export default async function Page() {
   const [calls, pageDoc] = await Promise.all([

@@ -79,8 +79,9 @@ export default function PartnersSection({ partners, collaborators }) {
 
   const beneficiaries = (partners || []).filter((p) => (p.group || 'beneficiary') === 'beneficiary')
   const partnerSites = (partners || []).filter((p) => p.group === 'partnerSite')
+  const trainingSites = (partners || []).filter((p) => p.group === 'trainingSite')
 
-  const isEmpty = beneficiaries.length === 0 && partnerSites.length === 0 && !collaborators?.length
+  const isEmpty = beneficiaries.length === 0 && partnerSites.length === 0 && trainingSites.length === 0 && !collaborators?.length
 
   if (isEmpty) {
     return <p className="text-center text-gray-400 py-12">{t('partners.empty')}</p>
@@ -100,6 +101,8 @@ export default function PartnersSection({ partners, collaborators }) {
       )}
 
       <PartnerGroup id="sites" title={t('partners.partnerSites')} partners={partnerSites} t={t} locale={locale} />
+
+      <PartnerGroup id="training-sites" title={t('partners.trainingSites')} partners={trainingSites} t={t} locale={locale} />
     </div>
   )
 }

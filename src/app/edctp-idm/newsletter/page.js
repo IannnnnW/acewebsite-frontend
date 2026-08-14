@@ -4,7 +4,7 @@ import NewsletterPage from '@/Components/edctp/pages/NewsletterPage'
 
 export const revalidate = 60
 
-export const metadata = { title: 'Newsletter | IDM Africa' }
+export const metadata = { title: 'Newsletter | IDM-Africa' }
 
 export default async function Page() {
   const [issues, pageDoc] = await Promise.all([

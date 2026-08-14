@@ -31,7 +31,7 @@
     "workPackages": "Lots de travaux"
   },
   "home": {
-    "sectionsTitle": "Découvrir IDM Africa",
+    "sectionsTitle": "Découvrir IDM-Africa",
     "sectionsSubtitle": "Tout ce que le programme offre, en un seul endroit",
     "latestPosts": "Dernières actualités du blog",
     "viewAllPosts": "Voir tous les articles",
@@ -39,7 +39,7 @@
       "opportunities": "Appels ouverts, bourses et dates limites de candidature pour les chercheurs d'Afrique subsaharienne.",
       "training": "Sites de formation, boursiers, types de projets et événements de formation à venir.",
       "partners": "Le consortium de bénéficiaires, collaborateurs et sites partenaires derrière le programme.",
-      "publications": "Recherches évaluées par des pairs et rapports produits par le réseau IDM Africa.",
+      "publications": "Recherches évaluées par des pairs et rapports produits par le réseau IDM-Africa.",
       "blog": "Actualités, témoignages et mises à jour du programme et de ses boursiers.",
       "newsletter": "Numéros du bulletin téléchargeables couvrant les étapes clés du programme."
     }
@@ -67,9 +67,9 @@
     "beneficiaries": "Bénéficiaires",
     "collaborators": "Collaborateurs",
     "partnerSites": "Sites partenaires",
+    "trainingSites": "Sites de formation",
     "visit": "Visiter",
     "empty": "Informations sur les collaborateurs à venir.",
-    "mapTitle": "Carte mondiale des collaborateurs",
     "mapEmpty": "Données de localisation à venir.",
     "statCollaborators": "Collaborateurs",
     "statCountries": "Pays",
@@ -77,7 +77,7 @@
   },
   "training": {
     "title": "Formation",
-    "hubIntro": "IDM Africa dispense des formations immersives de courte durée, fondées sur une théorie solide et une application pratique, ainsi qu'une bourse avancée d'un an avec mentorat. Découvrez où nous formons, qui sont nos mentors et boursiers, et les événements de formation à venir.",
+    "hubIntro": "IDM-Africa dispense des formations immersives de courte durée, fondées sur une théorie solide et une application pratique, ainsi qu'une bourse avancée d'un an avec mentorat. Découvrez où nous formons, qui sont nos mentors et boursiers, et les événements de formation à venir.",
     "tabTrainingSites": "Sites de formation",
     "tabFellows": "Boursiers",
     "tabMentors": "Mentors",
@@ -135,7 +135,7 @@
     "followIdi": "Suivre IDI Uganda",
     "followAce": "Suivre ACE Uganda",
     "acknowledgement": "Ce projet (IDM-Africa, subvention n° 101249031) a reçu un financement de l'entreprise commune EDCTP3 dans le cadre du programme de recherche et d'innovation Horizon Europe de l'Union européenne.",
-    "copyright": "© IDM Africa · Un programme de l'IDI, Université de Makerere",
+    "copyright": "© IDM-Africa · Un programme de l'IDI, Université de Makerere",
     "backToAce": "Retour au site principal d'ACE Uganda"
   },
   "site": {

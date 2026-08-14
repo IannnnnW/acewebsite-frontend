@@ -4,7 +4,7 @@ import TrainingSitesPage from '@/Components/edctp/pages/TrainingSitesPage'
 
 export const revalidate = 60
 
-export const metadata = { title: 'Training Sites | IDM Africa' }
+export const metadata = { title: 'Training Sites | IDM-Africa' }
 
 export default async function Page() {
   const sites = await client.fetch(edctpTrainingSitesQuery)

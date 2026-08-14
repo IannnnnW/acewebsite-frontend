@@ -1,6 +1,7 @@
 export const edctpSettingsQuery = `*[_id == "edctpSettings"][0]{
   programName,
   "logo": logo{ "url": asset->url },
+  "logoLight": logoLight{ "url": asset->url },
   "edctpAcknowledgementLogo": edctpAcknowledgementLogo{ "url": asset->url },
   contactPhone,
   idiSocials[]{ platform, url }

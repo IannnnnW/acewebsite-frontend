@@ -5,7 +5,7 @@ import { I18nProvider } from '@/lib/idmI18n'
 export const revalidate = 60
 
 export const metadata = {
-  title: 'IDM Africa — Infectious Diseases Modelling Africa | ACE Uganda',
+  title: 'IDM-Africa — Infectious Diseases Modelling Africa | ACE Uganda',
   description: 'Equipping early-to-mid career researchers in sub-Saharan Africa with practical infectious disease modelling skills.',
 }
 

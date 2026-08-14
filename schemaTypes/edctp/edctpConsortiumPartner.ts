@@ -16,6 +16,7 @@ export default defineType({
         list: [
           { title: 'Beneficiary', value: 'beneficiary' },
           { title: 'Partner Site', value: 'partnerSite' },
+          { title: 'Training Site', value: 'trainingSite' },
         ],
         layout: 'radio',
       },

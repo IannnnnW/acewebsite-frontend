@@ -1,4 +1,4 @@
-// Structure for the IDM Africa workspace: page singletons pinned at the top,
+// Structure for the IDM-Africa workspace: page singletons pinned at the top,
 // content collections below, site settings at the bottom.
 const PAGE_SINGLETONS = [
   { type: 'edctpHomePage', title: 'Home Page' },
@@ -13,7 +13,7 @@ const SINGLETON_TYPES = [...PAGE_SINGLETONS, SETTINGS_SINGLETON].map((s) => s.ty
 
 export const edctpStructure = (S) =>
   S.list()
-    .title('IDM Africa')
+    .title('IDM-Africa')
     .items([
       ...PAGE_SINGLETONS.map((s) =>
         S.listItem()

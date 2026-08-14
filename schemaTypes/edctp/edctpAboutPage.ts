@@ -16,7 +16,7 @@ export default defineType({
     {
       ...localeText('mission', 'Mission', 4),
       initialValue: {
-        en: 'IDM Africa addresses the critical shortage of infectious disease modellers in sub-Saharan Africa by establishing a Strategic Training Hub that delivers immersive short-term trainings grounded in strong theory and practical application.',
+        en: 'IDM-Africa addresses the critical shortage of infectious disease modellers in sub-Saharan Africa by establishing a Strategic Training Hub that delivers immersive short-term trainings grounded in strong theory and practical application.',
         fr: "IDM Afrique s'attaque à la pénurie critique de modélisateurs de maladies infectieuses en Afrique subsaharienne en créant un pôle stratégique de formation qui dispense des formations immersives de courte durée, fondées sur une théorie solide et une application pratique.",
       },
     },

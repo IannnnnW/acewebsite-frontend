@@ -31,6 +31,7 @@ export default function PartnersPage({ partners, collaborators }) {
 
   const beneficiaries = (partners || []).filter((p) => (p.group || 'beneficiary') === 'beneficiary')
   const sites = (partners || []).filter((p) => p.group === 'partnerSite')
+  const trainingSites = (partners || []).filter((p) => p.group === 'trainingSite')
 
   const { totalCollaborators, countryCount, continentCount } = useMemo(() => {
     const all = [...(partners || []), ...(collaborators || [])]
@@ -57,13 +58,7 @@ export default function PartnersPage({ partners, collaborators }) {
 
       <StatBand stats={stats} />
 
-      <div className="bg-white py-6 text-center">
-        <h2 className="text-2xl md:text-3xl font-extrabold uppercase tracking-wide text-idblue-900">
-          {t('partners.mapTitle')}
-        </h2>
-      </div>
-
-      <CollaboratorsMap beneficiaries={beneficiaries} collaborators={collaborators} sites={sites} />
+      <CollaboratorsMap beneficiaries={beneficiaries} collaborators={collaborators} sites={sites} trainingSites={trainingSites} />
 
       <div className="bg-white py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">

@@ -12,7 +12,7 @@ export default function IdmPageHeader({ eyebrow, title, subtitle, breadcrumb }) 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         {breadcrumb && (
           <nav className="flex items-center gap-2 text-idblue-300 text-xs mb-6">
-            <Link href="/edctp-idm" className="hover:text-white">IDM Africa</Link>
+            <Link href="/edctp-idm" className="hover:text-white">IDM-Africa</Link>
             {breadcrumb.map((crumb, i) => (
               <span key={i} className="flex items-center gap-2">
                 <span>/</span>

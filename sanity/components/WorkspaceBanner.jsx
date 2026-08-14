@@ -25,7 +25,7 @@ export function WorkspaceBanner() {
       }}
     >
       {isIdm
-        ? <><ScienceOutlined style={{ fontSize: 14 }} /> Editing: IDM Africa — Infectious Diseases Modelling Africa</>
+        ? <><ScienceOutlined style={{ fontSize: 14 }} /> Editing: IDM-Africa — Infectious Diseases Modelling Africa</>
         : <><LanguageOutlined style={{ fontSize: 14 }} /> Editing: ACE Uganda Main Site</>
       }
     </div>

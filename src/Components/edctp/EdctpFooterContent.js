@@ -21,8 +21,9 @@ export default function EdctpFooterContent({ siteSettings, edctpSettings }) {
     : []
   const idiSocials = (edctpSettings?.idiSocials || []).filter((s) => s?.url)
 
-  const programName = edctpSettings?.programName || 'IDM Africa'
+  const programName = edctpSettings?.programName || 'IDM-Africa'
   const phone = edctpSettings?.contactPhone || '0312 211 444'
+  const footerLogo = edctpSettings?.logoLight?.url || edctpSettings?.logo?.url
 
   return (
     <footer className="bg-idblue-900 text-idblue-100">
@@ -31,9 +32,9 @@ export default function EdctpFooterContent({ siteSettings, edctpSettings }) {
         {/* Zone 1 — brand + grant number / contact */}
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-8 pb-10 border-b border-idblue-800">
           <div className="flex items-center gap-3">
-            {edctpSettings?.logo?.url ? (
+            {footerLogo ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={edctpSettings.logo.url} alt={programName} className="h-[120px] w-auto object-contain" />
+              <img src={footerLogo} alt={programName} className="h-[120px] w-auto object-contain" />
             ) : (
               <p className="font-bold text-white text-lg leading-tight">{programName}</p>
             )}

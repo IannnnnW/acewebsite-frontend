@@ -5,5 +5,5 @@ import EdctpHeaderNav from './EdctpHeaderNav'
 export default async function EdctpHeader() {
   const settings = await client.fetch(edctpSettingsQuery)
 
-  return <EdctpHeaderNav logoUrl={settings?.logo?.url} programName={settings?.programName || 'IDM Africa'} />
+  return <EdctpHeaderNav logoUrl={settings?.logo?.url} programName={settings?.programName || 'IDM-Africa'} />
 }

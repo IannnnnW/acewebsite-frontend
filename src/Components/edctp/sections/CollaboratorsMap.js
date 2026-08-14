@@ -17,6 +17,7 @@ const GROUPS = [
   { key: 'beneficiaries', color: '#003366', labelKey: 'partners.beneficiaries' },
   { key: 'collaborators', color: '#a71c20', labelKey: 'partners.collaborators' },
   { key: 'sites', color: '#00AEEF', labelKey: 'partners.partnerSites' },
+  { key: 'trainingSites', color: '#D97706', labelKey: 'partners.trainingSites' },
 ]
 
 // Rest/hover fill for a partner country's boundary — "light blue" per the
@@ -121,7 +122,7 @@ function onEachCountry(feature, layer) {
   layer.on('mouseout', () => layer.setStyle(COUNTRY_BASE_STYLE))
 }
 
-export default function CollaboratorsMap({ beneficiaries = [], collaborators = [], sites = [] }) {
+export default function CollaboratorsMap({ beneficiaries = [], collaborators = [], sites = [], trainingSites = [] }) {
   const { t } = useI18n()
   const [worldGeo, setWorldGeo] = useState(null)
 
@@ -133,31 +134,32 @@ export default function CollaboratorsMap({ beneficiaries = [], collaborators = [
   }, [])
 
   const pinned = useMemo(() => {
-    const byGroup = { beneficiaries, collaborators, sites }
+    const byGroup = { beneficiaries, collaborators, sites, trainingSites }
     const withCoords = GROUPS.flatMap((group) =>
       (byGroup[group.key] || [])
         .map((item) => ({ item, coords: resolveCoords(item), group }))
         .filter((entry) => entry.coords)
     )
     return declutter(withCoords)
-  }, [beneficiaries, collaborators, sites])
+  }, [beneficiaries, collaborators, sites, trainingSites])
 
   const allPoints = pinned.map((p) => p.coords)
 
+  const allItems = useMemo(
+    () => [...beneficiaries, ...collaborators, ...sites, ...trainingSites],
+    [beneficiaries, collaborators, sites, trainingSites]
+  )
+
   const maxBounds = useMemo(() => {
-    const continents = new Set(
-      [...beneficiaries, ...collaborators, ...sites].map((item) => getContinent(item.country)).filter(Boolean)
-    )
+    const continents = new Set(allItems.map((item) => getContinent(item.country)).filter(Boolean))
     return boundsForContinents(continents)
-  }, [beneficiaries, collaborators, sites])
+  }, [allItems])
 
   const partnerCountryFeatures = useMemo(() => {
     if (!worldGeo) return null
-    const geoNames = new Set(
-      [...beneficiaries, ...collaborators, ...sites].map((item) => getGeoName(item.country)).filter(Boolean)
-    )
+    const geoNames = new Set(allItems.map((item) => getGeoName(item.country)).filter(Boolean))
     return { type: 'FeatureCollection', features: worldGeo.features.filter((f) => geoNames.has(f.properties.name)) }
-  }, [worldGeo, beneficiaries, collaborators, sites])
+  }, [worldGeo, allItems])
 
   if (pinned.length === 0) {
     return (

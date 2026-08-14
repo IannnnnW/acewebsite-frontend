@@ -4,7 +4,7 @@ import BlogListPage from '@/Components/edctp/pages/BlogListPage'
 
 export const revalidate = 60
 
-export const metadata = { title: 'Blog | IDM Africa' }
+export const metadata = { title: 'Blog | IDM-Africa' }
 
 export default async function Page() {
   const posts = await client.fetch(edctpBlogPostsQuery)

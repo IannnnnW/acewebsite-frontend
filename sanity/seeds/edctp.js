@@ -1,10 +1,10 @@
 /**
- * Seed data for the IDM Africa microsite.
+ * Seed data for the IDM-Africa microsite.
  *
  * These are NOT auto-imported — Sanity document arrays can't take a single
  * `initialValue` for multiple distinct documents, so this file exists purely
  * as a reference for manually creating the documents below in Sanity Studio
- * (workspace: IDM Africa Microsite).
+ * (workspace: IDM-Africa Microsite).
  *
  * All localized fields use the { en, fr } locale-object shape that the
  * schemas now expect.
@@ -23,7 +23,7 @@
 // `edctpSettings` now holds only site-wide identity and contact:
 export const settingsSeed = {
   _type: 'edctpSettings',
-  programName: 'IDM Africa',
+  programName: 'IDM-Africa',
   contactPhone: '0312 211 444',
 }
 

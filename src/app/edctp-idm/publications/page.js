@@ -4,7 +4,7 @@ import PublicationsPage from '@/Components/edctp/pages/PublicationsPage'
 
 export const revalidate = 60
 
-export const metadata = { title: 'Publications | IDM Africa' }
+export const metadata = { title: 'Publications | IDM-Africa' }
 
 export default async function Page() {
   const publications = await client.fetch(edctpPublicationsQuery)
