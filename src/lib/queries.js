@@ -502,3 +502,32 @@ export const allEventsQuery = `
     "detailsLink": "/events/" + slug.current
   }
 `
+// ── Newsletter ────────────────────────────────────────────────────────────────
+
+const newsletterCardFields = `
+  _id,
+  title,
+  slug,
+  publishedDate,
+  summary,
+  "cover": coverImage { alt, "url": asset->url, "lqip": asset->metadata.lqip }
+`
+
+export const allNewslettersQuery = `
+  *[_type == "newsletterIssue" && defined(slug.current)] | order(publishedDate desc) {
+    ${newsletterCardFields}
+  }
+`
+
+export const newsletterBySlugQuery = `
+  *[_type == "newsletterIssue" && slug.current == $slug][0] {
+    ${newsletterCardFields},
+    highlights,
+    "pdf": pdfFile.asset->{ url, size, originalFilename },
+    "otherIssues": *[_type == "newsletterIssue" && defined(slug.current) && slug.current != $slug] | order(publishedDate desc) [0...3] {
+      ${newsletterCardFields}
+    }
+  }
+`
+
+export const allNewsletterSlugsQuery = `*[_type == "newsletterIssue" && defined(slug.current)]{ "slug": slug.current }`

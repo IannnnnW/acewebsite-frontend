@@ -14,6 +14,7 @@ const footerNavigation = {
   research: [
     { name: 'Research Projects', href: '/research' },
     { name: 'Publications', href: '/publications' },
+    { name: 'Newsletter', href: '/newsletter' },
   ],
   academic: [
     { name: 'MSc Programs', href: '/training-programs' },

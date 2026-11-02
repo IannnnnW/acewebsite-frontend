@@ -24,3 +24,9 @@ export function useSearchTracking(term, params = {}, delay = 1000) {
     return () => clearTimeout(timer)
   }, [term, paramsKey, delay])
 }
+
+// One-off GA4 event (e.g. newsletter read/download). No-op when analytics isn't configured.
+export function trackEvent(name, params = {}) {
+  if (!GA_ID) return
+  sendGAEvent('event', name, params)
+}
