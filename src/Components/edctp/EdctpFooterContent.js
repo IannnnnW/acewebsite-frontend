@@ -1,7 +1,6 @@
 'use client'
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined'
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
-import Link from 'next/link'
 import { useI18n } from '@/lib/idmI18n'
 import { SOCIAL_ICONS, LINK_ICON, getSocialIcon } from '@/lib/socialIcons'
 
@@ -12,6 +11,14 @@ const ACE_SOCIAL_LABELS = {
   youtube: 'YouTube',
   instagram: 'Instagram',
   github: 'GitHub',
+}
+
+// The uploaded EDCTP artwork has a sentence with the grant number baked into its
+// lower part. Trim only this file, so a replacement upload is never cropped by mistake.
+const ACK_LOGO_WITH_CAPTION = '5805300243a61b2c78c29dfe8b3b6f360df6bd6b-2000x1297.png'
+
+function ackLogoSrc(url) {
+  return url?.endsWith(ACK_LOGO_WITH_CAPTION) ? `${url}?rect=0,0,2000,944&w=480` : url
 }
 
 function SocialLink({ href, label, icon }) {
@@ -33,26 +40,26 @@ export default function EdctpFooterContent({ siteSettings, edctpSettings }) {
     : []
   const idiSocials = (edctpSettings?.idiSocials || []).filter((s) => s?.url)
 
-  const programName = edctpSettings?.programName || 'IDM-Africa'
   const phone = edctpSettings?.contactPhone || '0312 211 444'
-  const footerLogo = edctpSettings?.logoLight?.url || edctpSettings?.logo?.url
 
   return (
     <footer className="bg-idblue-900 text-idblue-100">
       <div className="mx-auto max-w-7xl px-6 py-12">
 
-        {/* Zone 1 — brand + grant number / contact */}
+        {/* Zone 1 — EDCTP funding acknowledgement / contact */}
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-8 pb-10 border-b border-idblue-800">
-          <div className="flex items-center gap-3">
-            {footerLogo ? (
+          <div className="flex flex-col sm:flex-row sm:items-center gap-6">
+            {edctpSettings?.edctpAcknowledgementLogo?.url && (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={footerLogo} alt={programName} className="h-[120px] w-auto object-contain" />
-            ) : (
-              <p className="font-bold text-white text-lg leading-tight">{programName}</p>
+              <img
+                src={ackLogoSrc(edctpSettings.edctpAcknowledgementLogo.url)}
+                alt="Global Health EDCTP3, co-funded by the European Union"
+                className="h-24 w-fit shrink-0 object-contain bg-white rounded-md p-2"
+              />
             )}
-            <div>
-              <p className="text-xs text-idblue-200">{t('footer.grantNumber')}</p>
-            </div>
+            <p className="max-w-sm text-sm text-white leading-snug">
+              {t('footer.acknowledgement')}
+            </p>
           </div>
 
           <div>
@@ -94,33 +101,6 @@ export default function EdctpFooterContent({ siteSettings, edctpSettings }) {
               <p className="text-sm text-idblue-300">—</p>
             )}
           </div>
-        </div>
-      </div>
-
-      {/* Zone 3 — EDCTP funding acknowledgement */}
-      <div className="bg-idblue-950 border-t border-idblue-800">
-        <div className="mx-auto max-w-7xl px-6 py-8 flex flex-col sm:flex-row items-center sm:items-start gap-4">
-          {edctpSettings?.edctpAcknowledgementLogo?.url && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={edctpSettings.edctpAcknowledgementLogo.url}
-              alt="EDCTP"
-              className="h-16 shrink-0 object-contain bg-white rounded-md p-2"
-            />
-          )}
-          <p className="text-xs text-idblue-100 leading-relaxed text-center sm:text-left">
-            {t('footer.acknowledgement')}
-          </p>
-        </div>
-      </div>
-
-      {/* Zone 4 — copyright */}
-      <div className="border-t border-idblue-800">
-        <div className="mx-auto max-w-7xl px-6 py-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-idblue-200">
-          <p>{t('footer.copyright')}</p>
-          <Link href="/" className="hover:text-white transition-colors">
-            {t('footer.backToAce')}
-          </Link>
         </div>
       </div>
     </footer>
